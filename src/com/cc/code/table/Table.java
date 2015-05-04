@@ -1,4 +1,4 @@
-package com.jlong.code.table;
+package com.cc.code.table;
 
 import java.util.List;
 import java.util.Set;

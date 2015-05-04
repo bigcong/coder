@@ -1,4 +1,4 @@
-package com.jlong.code.table;
+package com.cc.code.table;
 
 /**
  * 表字段

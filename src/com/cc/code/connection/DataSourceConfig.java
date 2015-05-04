@@ -1,4 +1,4 @@
-package com.jlong.code.connection;
+package com.cc.code.connection;
 /**
  * 
  * @author jlon

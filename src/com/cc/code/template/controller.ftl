@@ -43,7 +43,7 @@ public class ${className_d}Controller {
 	 * @return
 	 */
 	@RequestMapping
-	public String list(${className_d} ${className},ModelMap modelMap) {
+	public String list(${className_d} ${className_x},ModelMap modelMap) {
 		
 		List<${className_d}> ${className}List = 
 		${className}Service.listPage${className_d}(${className_x});
@@ -58,7 +58,7 @@ public class ${className_d}Controller {
 	 * @return
 	 */
 	@RequestMapping(value = "/load")
-	public String load(@RequestParam(required=false) Integer id,ModelMap modelMap) {
+	public String load( Integer id,ModelMap modelMap) {
 			
 		${className_d} ${className_x} = ${className}Service.get${className_d}ById(id);
 		modelMap.addAttribute("${className}", ${className_x});
@@ -94,7 +94,7 @@ public class ${className_d}Controller {
 	 */
 	@RequestMapping(value = "/delete")
 	@ResponseBody
-	public String delete(@RequestParam String ids) {
+	public String delete( String ids) {
 	    String[] delIds = ids.split(",");
 		${className}Service.delete${className_d}ByIds(delIds);
 		return "success";
@@ -106,7 +106,7 @@ public class ${className_d}Controller {
 	 */
 	@RequestMapping(value = "/view")
 	@ResponseBody
-	public String delete(@RequestParam int id,ModelMap modelMap) {
+	public String delete( int id,ModelMap modelMap) {
 		${className_d} ${className_x} = ${className}Service.get${className_d}ById(id);
 		modelMap.addAttribute("${className}", ${className_x});
 		return "${className_x}/${className_d}View";

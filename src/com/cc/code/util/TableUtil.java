@@ -1,4 +1,4 @@
-package com.jlong.code.util;
+package com.cc.code.util;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -14,12 +14,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.jlong.code.table.Table;
-import com.jlong.code.table.TableBind;
-import com.jlong.code.table.TableCarray;
-import com.jlong.code.table.TableIndex;
+import com.cc.code.table.Table;
+import com.cc.code.table.TableBind;
+import com.cc.code.table.TableCarray;
+import com.cc.code.table.TableIndex;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings("all")
 public class TableUtil {
 	/**
 	 * 功能描述：得到指定参数的表信息参数说明： 参数:catalog:目录名称，一般都为空. 参数：schema:数据库名，对于oracle来说就用户名
@@ -45,7 +45,7 @@ public class TableUtil {
 		 */
 		List<ResultSet> sets = new ArrayList<ResultSet>();
 
-		if (tableNames != null && tableNames.length!=0) {
+		if (tableNames != null && tableNames.length != 0) {
 			for (String tableName : tableNames) {
 				ResultSet rs = dme.getTables("", "", tableName,
 						new String[] { "TABLE" });
@@ -230,6 +230,7 @@ public class TableUtil {
 			boolean isSigned = rsmd.isSigned(i);
 			boolean isWritable = rsmd.isWritable(i);
 
+			@SuppressWarnings("rawtypes")
 			Map e = new HashMap();
 			e.put("i", i);
 			e.put("columnName", columnName);
@@ -281,7 +282,7 @@ public class TableUtil {
 	 * @throws Exception
 	 */
 	public static final List<Table> getTables(Connection conn,
-			String packageName,String[] tableNames) throws Exception {
+			String packageName, String[] tableNames) throws Exception {
 
 		// 存放数据库当中的表
 		List<Table> tables = new ArrayList<Table>();
@@ -289,18 +290,18 @@ public class TableUtil {
 		Table table = null;
 
 		// 取得表名称集合
-		List<String> tabelNames = getTableNanes(conn,tableNames);
+		List<String> tabelNames = getTableNanes(conn, tableNames);
 
 		// 遍历所有的表名。转换成大写或者小写
 		for (String tableName : tabelNames) {
 
 			// 大写表名称
 			String className_d = StringUtil.upperFirst(PinYinUtil
-					.getFirstSpell(tableName));
+					.getFirstSpell(StringUtil.newTableName(tableName)));
 
 			// 小写表名称
 			String className_x = StringUtil.lowerFirst(PinYinUtil
-					.getFirstSpell(tableName));
+					.getFirstSpell(StringUtil.newTableName(tableName)));
 
 			// 表索引
 			List<TableIndex> tableIndexs = getTableIndexs(conn, tableName);// 表索引
@@ -419,12 +420,15 @@ public class TableUtil {
 			String columnLabel = map.get("columnLabel").toString();
 
 			String carrayName_d = StringUtil.upperFirst(PinYinUtil
-					.getFirstSpell(columnLabel));// 首字母大写
+					.getFirstSpell(StringUtil.newTableName(columnLabel)));// 首字母大写
 
 			String carrayName_x = StringUtil.lowerFirst(PinYinUtil
-					.getFirstSpell(columnLabel));// 首字母小写
+					.getFirstSpell(StringUtil.newTableName(columnLabel)));// 首字母小写
 
 			String carrayType = map.get("javaForType").toString();// 字段类型
+			if (carrayType.equals("int")) {
+				carrayType = "Integer";
+			}
 
 			tabelCarray = new TableCarray(columnLabel, carrayName_d,
 					carrayName_x, carrayType, "");
@@ -575,4 +579,5 @@ public class TableUtil {
 		}
 		return tableBinds;
 	}
+
 }

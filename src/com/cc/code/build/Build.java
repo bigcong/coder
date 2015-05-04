@@ -1,7 +1,7 @@
-package com.jlong.code.build;
+package com.cc.code.build;
 
-import com.jlong.code.connection.DataSourceConfig;
-import com.jlong.code.generator.Generator;
+import com.cc.code.connection.DataSourceConfig;
+import com.cc.code.generator.Generator;
 
 /**
  * 
@@ -30,7 +30,7 @@ public class Build {
 		 * 第三个参数:数据源配置
 		 */
 		Generator generator = new Generator(new String[] { "jz_user_axis" },
-				"com.haolin", "com/jlong/code/template/", cfg);
+				"com.haolin", "com/cc/code/template/", cfg);
 		generator
 				.generate(true, true, true, true, true, true, true, true, true);
 

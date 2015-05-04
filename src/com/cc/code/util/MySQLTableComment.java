@@ -1,4 +1,4 @@
-package com.jlong.code.util;
+package com.cc.code.util;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;

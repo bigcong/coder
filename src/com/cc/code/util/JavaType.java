@@ -1,4 +1,4 @@
-package com.jlong.code.util;
+package com.cc.code.util;
 
 import java.math.BigDecimal;
 import java.sql.Array;

@@ -1,4 +1,4 @@
-package com.jlong.code.fileWriter;
+package com.cc.code.fileWriter;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
-import com.jlong.code.table.Table;
-import com.jlong.code.util.DirMaker;
+import com.cc.code.table.Table;
+import com.cc.code.util.DirMaker;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;

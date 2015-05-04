@@ -1,13 +1,13 @@
-package com.jlong.code.generator;
+package com.cc.code.generator;
 
 import java.sql.Connection;
 import java.util.List;
 
-import com.jlong.code.connection.ConnectionFactory;
-import com.jlong.code.connection.DataSourceConfig;
-import com.jlong.code.fileWriter.FileWriterFactory;
-import com.jlong.code.table.Table;
-import com.jlong.code.util.TableUtil;
+import com.cc.code.connection.ConnectionFactory;
+import com.cc.code.connection.DataSourceConfig;
+import com.cc.code.fileWriter.FileWriterFactory;
+import com.cc.code.table.Table;
+import com.cc.code.util.TableUtil;
 
 import freemarker.template.Configuration;
 /**
