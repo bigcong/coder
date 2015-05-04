@@ -35,7 +35,7 @@ public  class ${className_d}ServiceImpl implements ${className_d}Service{
 	}
 	
 	@Override
-	public ${className_d} get${className_d}(${className_d} ${className_x}){
+	public List<${className_d}> get${className_d}(${className_d} ${className_x}){
 	    return ${className_x}Mapper.get${className_d}(${className_x});
 	}  
 	

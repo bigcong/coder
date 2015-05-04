@@ -13,13 +13,14 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+
 /**
  * 
  * @author jlon
  *
  */
 public class FileWriterFactory {
-	
+
 	private static Configuration cfg;
 	/**
 	 * 
@@ -32,11 +33,11 @@ public class FileWriterFactory {
 	/**
 	 * 
 	 */
-	public static final int SQLXML =3 ;
+	public static final int SQLXML = 3;
 	/**
 	 * 
 	 */
-	public static final int SERVICE =4;
+	public static final int SERVICE = 4;
 	/**
 	 * 
 	 */
@@ -45,22 +46,23 @@ public class FileWriterFactory {
 	 * 
 	 */
 	public static final int LISTJSP = 6;
-	
+
 	public static final int INFOJSP = 7;
-	
+
 	public static final int VIEWJSP = 8;
-	
+
 	public static final int CONTROLLER = 9;
+
 	/**
-     * 
-     * @param url
-     * @return
-     */
+	 * 
+	 * @param url
+	 * @return
+	 */
 	public static Configuration getConfiguration(String url) {
 		if (cfg == null) {
 			cfg = new Configuration();
 			url = FileWriterFactory.class.getResource("/").getPath() + url;
-			
+
 			System.out.println(url);
 			File file = new File(url);
 			try {
@@ -73,7 +75,6 @@ public class FileWriterFactory {
 		return cfg;
 	}
 
-	
 	/**
 	 * 
 	 * @param cfg
@@ -81,17 +82,13 @@ public class FileWriterFactory {
 	 * @param templateName
 	 *            模板名称
 	 * @param root
-	 *            数据对象
-	 *            包名称
+	 *            数据对象 包名称
 	 * @param fileName
 	 *            生成文件名称
 	 */
-	public static void dataSourceOut(
-			Configuration cfg, 
-			String templateName,
-			Table table, 
-			int type) {
-		String fileName=null;
+	public static void dataSourceOut(Configuration cfg, String templateName,
+			Table table, int type) {
+		String fileName = null;
 		Template temp = null;
 		try {
 			temp = cfg.getTemplate(templateName);
@@ -99,63 +96,64 @@ public class FileWriterFactory {
 			e.printStackTrace();
 		}
 		Writer out = null;
-		
+
 		try {
 			String packageName = "";
 			switch (type) {
 			case POJO:
-				fileName=".java";
-				packageName = table.getPackageName()+".entity";//获得这个文件的存储路径(外部传进来的)
+				fileName = ".java";
+				packageName = table.getPackageName() + ".entity";// 获得这个文件的存储路径(外部传进来的)
 				break;
 			case CONTROLLER:
-				fileName="Controller"+".java";
-				packageName = table.getPackageName()+".controller";//获得这个文件的存储路径(外部传进来的)
+				fileName = "Controller" + ".java";
+				packageName = table.getPackageName() + ".controller";// 获得这个文件的存储路径(外部传进来的)
 				break;
 			case MAPPER:
-				fileName="Mapper"+".java";
-				packageName = table.getPackageName()+".mapper";
+				fileName = "Mapper" + ".java";
+				packageName = table.getPackageName() + ".mapper";
 				break;
 			case SERVICE:
-				fileName="Service"+".java";
-				packageName = table.getPackageName()+".service";
+				fileName = "Service" + ".java";
+				packageName = table.getPackageName() + ".service";
 				break;
 			case SERVICE_IMPL:
-				fileName="ServiceImpl"+".java";
-				packageName = table.getPackageName()+".service.impl";
+				fileName = "ServiceImpl" + ".java";
+				packageName = table.getPackageName() + ".service.impl";
 				break;
 			case SQLXML:
-				fileName="Mapper"+".xml";
-				packageName = table.getPackageName()+".sqlXml";//获得这个文件的存储路径(外部传进来的)
+				fileName = "Mapper" + ".xml";
+				packageName = "mybatis";// 获得这个文件的存储路径(外部传进来的)
 				break;
 			case LISTJSP:
-				fileName="List.jsp";
-				packageName = ".jsp."+table.getClassName_d();
+				fileName = "List.jsp";
+				packageName = ".jsp." + table.getClassName_d();
 				break;
 			case INFOJSP:
-				fileName="Info.jsp";
-				packageName = ".jsp."+table.getClassName_d();
+				fileName = "Info.jsp";
+				packageName = ".jsp." + table.getClassName_d();
 				break;
 			case VIEWJSP:
-				fileName="View.jsp";
-				packageName =".jsp."+table.getClassName_d();
+				fileName = "View.jsp";
+				packageName = ".jsp." + table.getClassName_d();
 				break;
 			}
 			packageName = packageName.replace(".", "/");
-			
-			String url ="D:/generate/"+packageName + "/" +table.getClassName_d()+ fileName;
-			
+
+			String url = "D:/generate/" + packageName + "/"
+					+ table.getClassName_d() + fileName;
+
 			File file = new File(url);
-			
+
 			DirMaker.createFile(file);
-			
+
 			out = new FileWriter(file);
-			
+
 			temp.process(table, out);
-			
+
 			temp.process(table, new OutputStreamWriter(System.out));
-			
+
 			out.flush();
-			
+
 		} catch (TemplateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -170,14 +168,14 @@ public class FileWriterFactory {
 			}
 		}
 	}
-    
+
 	/**
-     * 
-     * @param cfg
-     * @param templateName
-     * @param root
-     * @param fileName
-     */
+	 * 
+	 * @param cfg
+	 * @param templateName
+	 * @param root
+	 * @param fileName
+	 */
 	public static void dataSourceOut(Configuration cfg, String templateName,
 			Object root, String fileName) {
 

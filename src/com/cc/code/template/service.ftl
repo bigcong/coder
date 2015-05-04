@@ -22,7 +22,7 @@ public interface ${className_d}Service{
 	/**
 	 *插入
 	 */
-	public void insert${className_d}(${className_d} ${className_x});
+	public void insert(${className_d} ${className_x});
 	
 	/**
 	 * 根据主键查询(唯一)
@@ -32,7 +32,7 @@ public interface ${className_d}Service{
 	/**
 	 * 根据根据条件查询${className_d} 
 	 */
-	public ${className_d} get${className_d}(${className_d} ${className_x});  
+	public List<${className_d}> get${className_d}(${className_d} ${className_x});  
 	 
 	 /**
 	 * 更新${className_d}

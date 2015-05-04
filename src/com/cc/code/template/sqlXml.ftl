@@ -6,11 +6,8 @@
 <mapper namespace="${packageName}.mapper.${className_d}Mapper">
 	
 	<resultMap id="${className_d}Map" type="${className_d}">
-		  <id property="id" column="ID" />
 		<#list tableCarrays as tableCarray>
-		  <#if tableCarray.carrayName !='id' && tableCarray.carrayName !='ID'>
 		   <result property="${tableCarray.carrayName_x}" column="${tableCarray.carrayName}" />
-		  </#if>
 		</#list>
 	</resultMap>
 	
@@ -52,7 +49,10 @@
 	<select id="get${className_d}ById" parameterType="Integer" resultType="${className_d}">
 		select 
 		<include refid="${className_d}Columns" /> 
-		from ${className} where id=<@mapperEl value="id" />
+		from ${className} where 
+			<#list tableIndexs as tableIndex>
+		         ${tableIndex.stringCarrayNames5}
+	       </#list>
 	</select>
 	
 	<!-- 根据条件查询 ${className}  -->
@@ -69,11 +69,11 @@
 	
 	<!--更新  -->
 	<update id="update${className_d}" parameterType="${className_d}">
-		<#list tableIndexs as tableIndex>
 		UPDATE ${className} 
 		SET
 		${stringCarrayNames5}
 		WHERE
+		<#list tableIndexs as tableIndex>
 		${tableIndex.stringCarrayNames5}
 	    </#list>
 	</update>
@@ -88,13 +88,5 @@
 				and ${tableCarray.carrayName} =  <@mapperEl tableCarray.carrayName_x/>
 			</if>
 		 </#list>
-	</delete>
-	
-	<!--根据主键删除  -->
-	<delete id="delete${className_d}ByIds">
-		delete from ${className} where id in
-		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
-          #{item}  
-        </foreach>  
 	</delete>
 </mapper>

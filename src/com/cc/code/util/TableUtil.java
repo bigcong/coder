@@ -473,9 +473,9 @@ public class TableUtil {
 				String carrayName = map.get("COLUMN_NAME").toString();
 				unique = "false".equals(map.get("NON_UNIQUE").toString());
 				String carrayName_d = StringUtil.upperFirst(PinYinUtil
-						.getFirstSpell(carrayName));
+						.getFirstSpell(StringUtil.newTableName(carrayName)));
 				String carrayName_x = StringUtil.lowerFirst(PinYinUtil
-						.getFirstSpell(carrayName));
+						.getFirstSpell(StringUtil.newTableName(carrayName)));
 				carrayNames.add(carrayName);
 				carrayNames_d.add(carrayName_d);
 				carrayNames_x.add(carrayName_x);
@@ -500,7 +500,7 @@ public class TableUtil {
 				stringCarrayNames3 += carrayTypes.get(carrayName_d) + " "
 						+ carrayName_x;
 				stringCarrayNames4 += carrayName_x;
-				stringCarrayNames5 += String.format("%s=#%s#", carrayName,
+				stringCarrayNames5 += String.format("%s=#{%s}", carrayName,
 						carrayName_x);
 			}
 			tabelIndex = new TableIndex(indexName, carrayNames, carrayNames_d,

@@ -3,7 +3,6 @@ package com.cc.code.table;
 import java.util.List;
 import java.util.Set;
 
-
 /**
  * 
  * @author jlon
@@ -15,11 +14,14 @@ public class Table {
 	private String className_x;// 小写表名称
 
 	private String packageName;
-	
+
 	private List<TableCarray> tableCarrays;// 表字段
-	
+	private String key;
+	private String key_x;// 主键小写
+	private String key_d;// 主键大写
+
 	private List<TableIndex> tableIndexs;// 表索引
-	
+
 	private List<TableBind> tableBinds;// 表主外键
 
 	private Set<String> importPojos;// 需要导入的POJO
@@ -29,9 +31,9 @@ public class Table {
 	private String stringCarrayNames3;// ","拼接原字段
 	private String stringCarrayNames4;// "#%s#,"拼接小写字段
 	private String stringCarrayNames5;// "%s=#%s#,"拼接原字段-小写字段
-	
+
 	private String stringCarrayNames6;// "%s=#%s#,"拼接原字段-小写字段
-	
+
 	private String stringCarrayNames7;// "%s=#%s#,"拼接原字段-小写字段
 
 	public Table(String className, String classNameD, String classNameX,
@@ -40,8 +42,7 @@ public class Table {
 			Set<String> importPojos, String stringCarrayNames1,
 			String stringCarrayNames2, String stringCarrayNames3,
 			String stringCarrayNames4, String stringCarrayNames5,
-			String stringCarrayNames6,String stringCarrayNames7
-			) {
+			String stringCarrayNames6, String stringCarrayNames7) {
 		super();
 		this.className = className;
 		className_d = classNameD;
@@ -56,9 +57,42 @@ public class Table {
 		this.stringCarrayNames3 = stringCarrayNames3;
 		this.stringCarrayNames4 = stringCarrayNames4;
 		this.stringCarrayNames5 = stringCarrayNames5;
-		
+
 		this.stringCarrayNames6 = stringCarrayNames6;
 		this.stringCarrayNames7 = stringCarrayNames7;
+	}
+
+	
+	
+	
+	public String getKey() {
+		return tableIndexs.get(0).getCarrayNames().get(0);
+	}
+
+
+
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+
+
+
+	public String getKey_x() {
+		return tableIndexs.get(0).getCarrayNames_x().get(0);
+	}
+
+	public void setKey_x(String key_x) {
+		this.key_x = key_x;
+	}
+
+	public String getKey_d() {
+		return tableIndexs.get(0).getCarrayNames_d().get(0);
+	}
+
+	public void setKey_d(String key_d) {
+		this.key_d = key_d;
 	}
 
 	public String getClassName() {
@@ -84,7 +118,6 @@ public class Table {
 	public void setClassName_x(String classNameX) {
 		className_x = classNameX;
 	}
-
 
 	public List<TableCarray> getTableCarrays() {
 		return tableCarrays;

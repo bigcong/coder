@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
 import ${packageName}.entity.${className_d};
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -13,13 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
 import ${packageName}.service.${className_d}Service;
 
@@ -58,9 +53,8 @@ public class ${className_d}Controller {
 	 * @return
 	 */
 	@RequestMapping(value = "/load")
-	public String load( Integer id,ModelMap modelMap) {
-			
-		${className_d} ${className_x} = ${className}Service.get${className_d}ById(id);
+	public String load( ${className_d} ${className_x},ModelMap modelMap) {
+	 ${className_x} = ${className}Service.get${className_d}ById(${className_x}.get${key_d}());
 		modelMap.addAttribute("${className}", ${className_x});
 		
 		return "${className_x}/${className_d}Info";
@@ -75,8 +69,8 @@ public class ${className_d}Controller {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(${className_d} ${className_x},ModelMap modelMap) {
 	    try {
-			if (${className_x}.getId() == null || ${className_x}.getId().intValue() == 0) {
-				${className}Service.insert${className_d}(${className_x});
+			if (${className_x}.get${key_d}() == null || ${className_x}.get${key_d}().intValue() == 0) {
+				${className}Service.insert(${className_x});
 			} else {
 				${className}Service.update${className_d}(${className_x});
 			}
@@ -88,27 +82,16 @@ public class ${className_d}Controller {
 	}
 
 
-	/**
-	 * 删除
-	 * @param  ${className_x}Ids
-	 */
-	@RequestMapping(value = "/delete")
-	@ResponseBody
-	public String delete( String ids) {
-	    String[] delIds = ids.split(",");
-		${className}Service.delete${className_d}ByIds(delIds);
-		return "success";
-	}
+
 	
 	/**
 	 * 查看详情
 	 * @param  ${className_x}Id
 	 */
-	@RequestMapping(value = "/view")
+	@RequestMapping(value = "/delete")
 	@ResponseBody
-	public String delete( int id,ModelMap modelMap) {
-		${className_d} ${className_x} = ${className}Service.get${className_d}ById(id);
-		modelMap.addAttribute("${className}", ${className_x});
-		return "${className_x}/${className_d}View";
+	public String delete(${className_d} ${className_x} ,ModelMap modelMap) {
+		${className}Service.delete${className_d}(${className_x});
+		return "删除成功";
 	}
 }
