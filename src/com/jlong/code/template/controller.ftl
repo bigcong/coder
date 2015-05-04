@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
-import ${packageName}.entity.${className_d}
+import ${packageName}.entity.${className_d};
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,6 @@ import ${packageName}.service.${className_d}Service;
 
 
 @Controller
-@Scope("prototype")
 @RequestMapping(value = "/${className}")
 public class ${className_d}Controller {
 
@@ -47,7 +46,7 @@ public class ${className_d}Controller {
 	public String list(${className_d} ${className},ModelMap modelMap) {
 		
 		List<${className_d}> ${className}List = 
-		${className}Service.listPage${className_d}(${className_x})
+		${className}Service.listPage${className_d}(${className_x});
 		modelMap.addAttribute("${className}List", ${className}List);
 		
 		return "${className_x}/${className_d}List";
@@ -96,7 +95,7 @@ public class ${className_d}Controller {
 	@RequestMapping(value = "/delete")
 	@ResponseBody
 	public String delete(@RequestParam String ids) {
-	    String[] delIds = ids..split(",");
+	    String[] delIds = ids.split(",");
 		${className}Service.delete${className_d}ByIds(delIds);
 		return "success";
 	}

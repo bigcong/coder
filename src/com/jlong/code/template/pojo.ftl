@@ -1,4 +1,4 @@
-package ${packageName}.entity.${className_d};
+package ${packageName}.entity;
 
 import java.util.*;
 /**

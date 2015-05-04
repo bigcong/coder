@@ -1,7 +1,8 @@
 package ${packageName}.service.impl;
 import java.util.*;
 import ${packageName}.mapper.${className_d}Mapper;
-import ${packageName}.entity.${className_d}
+import ${packageName}.entity.${className_d};
+import ${packageName}.service.${className_d}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

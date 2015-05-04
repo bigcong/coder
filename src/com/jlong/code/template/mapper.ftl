@@ -1,6 +1,6 @@
 package ${packageName}.mapper;
 import java.util.*;
-import ${packageName}.entity.${className_d}
+import ${packageName}.entity.${className_d};
 /**
  * ${className}
  */
