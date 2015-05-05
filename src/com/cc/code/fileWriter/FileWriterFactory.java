@@ -126,15 +126,15 @@ public class FileWriterFactory {
 				break;
 			case LISTJSP:
 				fileName = "List.jsp";
-				packageName = ".jsp." + table.getClassName_d();
+				packageName = ".jsp." + table.getClassName_x();
 				break;
 			case INFOJSP:
 				fileName = "Info.jsp";
-				packageName = ".jsp." + table.getClassName_d();
+				packageName = ".jsp." + table.getClassName_x();
 				break;
 			case VIEWJSP:
 				fileName = "View.jsp";
-				packageName = ".jsp." + table.getClassName_d();
+				packageName = ".jsp." + table.getClassName_x();
 				break;
 			}
 			packageName = packageName.replace(".", "/");

@@ -29,18 +29,18 @@
 	});
 	
 	//全选
-    function sltAll${className}() {
+    function sltAll${className_x}() {
 		if ($("#sltAll").attr("checked")) {
-			$("input[name='${className}Ids']").attr("checked", true);
+			$("input[name='${className_x}Ids']").attr("checked", true);
 		} else {
-			$("input[name='${className}Ids']").attr("checked", false);
+			$("input[name='${className_x}Ids']").attr("checked", false);
 		}
 	}
     //新增
 	function load${className_d}() {
 		var dg = new $.dialog({
-			title : '新增${className}信息',
-			id : '${className}_new',
+			title : '新增${className_x}信息',
+			id : '${className_x}_new',
 			width : 650,
 			height : 350,
 			iconTitle : false,
@@ -48,15 +48,15 @@
 			maxBtn : false,
 			xButton : true,
 			resize : false,
-			page : '${className}/load.html'
+			page : '${className_x}/load.html'
 		});
 		dg.ShowDialog();
 	}
     
     //删除
-	function del${className_d}(${className}Id) {
+	function del${className_d}(${className_x}Id) {
 		if (confirm("确定要删除该记录？")) {
-			var url = "${className}/delete.html?id=" + ${className}Id;
+			var url = "${className_x}/delete.html?id=" + ${className_x}Id;
 			$.get(url, function(data) {
 				if (data == "success") {
 					document.location.reload();
@@ -66,7 +66,7 @@
 	}
 	
 	//详情
-	function view${className_d}(${className}Id){
+	function view${className_d}(${className_x}Id){
 		var dg = new $.dialog({
 			title : '查看${className_d}信息详情',
 			id : '${className_d}_view',
@@ -77,14 +77,14 @@
 			maxBtn : false,
 			xButton : true,
 			resize : false,
-			page : '${className}/view.html?id='+${className}Id
+			page : '${className_x}/view.html?id='+${className_x}Id
 		});
 		dg.ShowDialog();
 	}
 	
 	 //查询
 	function search() {
-		$("#${className}Form").submit();
+		$("#${className_x}Form").submit();
 	}
     
     //导出
@@ -117,8 +117,8 @@
 </script>
 </head>
 <body>
-	<form action="${className}.html" method="post" name="${className}Form"
-		id="${className}Form">
+	<form action="${className_x}.html" method="post" name="${className_x}Form"
+		id="${className_x}Form">
 		
 		<div class="search_div">
 			查询条件(自己补)：<input type="text" name="" value="" /> 
@@ -137,7 +137,7 @@
 			class="main_table">
 			<tr class="main_head">
 				<th><input type="checkbox" name="sltAll" id="sltAll"
-					onclick="sltAll${className}()" /></th>
+					onclick="sltAll${className_x}()" /></th>
 				<th>序号</th>
 				<#list tableCarrays as tableCarray>
 				   <th>${tableCarray.remark}</th>
@@ -150,8 +150,8 @@
 					<c:forEach items="<@mapperElList className/>" var="a" varStatus="vs">
 						<tr class="main_info">
 							<td>
-							  <input type="checkbox" name="${className}Ids" 
-							  id="${className}Ids" value="<@mapperEl pre="a.id"/>" />
+							  <input type="checkbox" name="${className_x}Ids" 
+							  id="${className_x}Ids" value="<@mapperEl pre="a.id"/>" />
 							</td>
 							<td><@mapperEl pre="vs.index+1"/></td>
 							<#list tableCarrays as tableCarray>
@@ -179,7 +179,7 @@
 				</c:otherwise>
 			</c:choose>
 		</table>
-		<div class="page_and_btn"><@mapperEl pre="${className}" end=".page.pageStr"/></div>
+		<div class="page_and_btn"><@mapperEl pre="${className_x}" end=".page.pageStr"/></div>
 	</form>
 </body>
 </html>

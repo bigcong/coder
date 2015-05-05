@@ -20,11 +20,11 @@ import ${packageName}.service.${className_d}Service;
 
 
 @Controller
-@RequestMapping(value = "/${className}")
+@RequestMapping(value = "/${className_x}")
 public class ${className_d}Controller {
 
 	@Autowired
-	private ${className_d}Service ${className}Service;
+	private ${className_d}Service ${className_x}Service;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -37,12 +37,12 @@ public class ${className_d}Controller {
 	 * @param ${className}
 	 * @return
 	 */
-	@RequestMapping
+	@RequestMapping("list")
 	public String list(${className_d} ${className_x},ModelMap modelMap) {
 		
-		List<${className_d}> ${className}List = 
-		${className}Service.listPage${className_d}(${className_x});
-		modelMap.addAttribute("${className}List", ${className}List);
+		List<${className_d}> ${className_x}List = 
+		${className_x}Service.listPage${className_d}(${className_x});
+		modelMap.addAttribute("${className_x}List", ${className_x}List);
 		
 		return "${className_x}/${className_d}List";
 	}
@@ -54,8 +54,8 @@ public class ${className_d}Controller {
 	 */
 	@RequestMapping(value = "/load")
 	public String load( ${className_d} ${className_x},ModelMap modelMap) {
-	 ${className_x} = ${className}Service.get${className_d}ById(${className_x}.get${key_d}());
-		modelMap.addAttribute("${className}", ${className_x});
+	 ${className_x} = ${className_x}Service.get${className_d}ById(${className_x}.get${key_d}());
+		modelMap.addAttribute("${className_x}", ${className_x});
 		
 		return "${className_x}/${className_d}Info";
 	}
@@ -70,9 +70,9 @@ public class ${className_d}Controller {
 	public String save(${className_d} ${className_x},ModelMap modelMap) {
 	    try {
 			if (${className_x}.get${key_d}() == null || ${className_x}.get${key_d}().intValue() == 0) {
-				${className}Service.insert(${className_x});
+				${className_x}Service.insert(${className_x});
 			} else {
-				${className}Service.update${className_d}(${className_x});
+				${className_x}Service.update${className_d}(${className_x});
 			}
 		    modelMap.addAttribute("success","success");
 		} catch (Exception e) {
@@ -91,7 +91,7 @@ public class ${className_d}Controller {
 	@RequestMapping(value = "/delete")
 	@ResponseBody
 	public String delete(${className_d} ${className_x} ,ModelMap modelMap) {
-		${className}Service.delete${className_d}(${className_x});
+		${className_x}Service.delete${className_d}(${className_x});
 		return "删除成功";
 	}
 }
