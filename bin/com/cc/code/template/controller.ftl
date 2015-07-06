@@ -43,7 +43,7 @@ public class ${className_d}Controller {
 		List<${className_d}> ${className_x}List = 
 		${className_x}Service.listPage${className_d}(${className_x});
 		modelMap.addAttribute("${className_x}List", ${className_x}List);
-		
+		modelMap.addAttribute("${className_x}", ${className_x});
 		return "${className_x}/${className_d}List";
 	}
 	
