@@ -92,6 +92,6 @@ public class ${className_d}Controller {
 	@ResponseBody
 	public String delete(${className_d} ${className_x} ,ModelMap modelMap) {
 		${className_x}Service.delete${className_d}(${className_x});
-		return "删除成功";
+		return "success";
 	}
 }

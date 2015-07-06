@@ -48,7 +48,7 @@
 			maxBtn : false,
 			xButton : true,
 			resize : false,
-			page : '${className_x}/load.html'
+			page : 'load.html'
 		});
 		dg.ShowDialog();
 	}
@@ -56,8 +56,9 @@
     //删除
 	function del${className_d}(${className_x}Id) {
 		if (confirm("确定要删除该记录？")) {
-			var url = "${className_x}/delete.html?id=" + ${className_x}Id;
+			var url = "delete.html?${key_x}=" + ${className_x}Id;
 			$.get(url, function(data) {
+			    data=JSON.parse(data);
 				if (data == "success") {
 					document.location.reload();
 				}
@@ -77,7 +78,7 @@
 			maxBtn : false,
 			xButton : true,
 			resize : false,
-			page : '${className_x}/view.html?id='+${className_x}Id
+			page : 'view.html?${key_x}='+${className_x}Id
 		});
 		dg.ShowDialog();
 	}
