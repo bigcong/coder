@@ -62,7 +62,7 @@ body {
 		dg = frameElement.lhgDG;
 		dg.addBtn('ok', '保存', function() {
 			checkInfo();
-			$("#${carrayName_x}Form").submit();
+			$("#${className_x}Form").submit();
 		});
 		
 	});
@@ -89,7 +89,7 @@ body {
 </script>
 </head>
 <body>
-	<form action="save.html" name="${carrayName_x}Form" id="${carrayName_x}Form"
+	<form action="save.html" name="${className_x}Form" id="${className_x}Form"
 		target="result" method="post" onsubmit="checkInfo();">
 		
 		<input type="hidden" name="${key_x}" value="<@mapperEl pre="${className_x}." end="${key_x}"/>" />

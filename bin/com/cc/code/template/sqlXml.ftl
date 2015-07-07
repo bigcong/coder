@@ -45,6 +45,24 @@
 		)
 	</insert>
 	
+	<insert id="insertSelective" parameterType="${packageName}.entity.${className_d}" useGeneratedKeys="true" keyProperty="id">
+		insert into jz_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		 <#list tableCarrays as tableCarray>
+		    <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+		      ${tableCarray.carrayName},
+		    </if>
+		</#list>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<#list tableCarrays as tableCarray>
+		   <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+		     <@mapperEl tableCarray.carrayName_x/>,
+		    </if>
+		 </#list>
+		</trim>
+	</insert>	
+	
 	<!-- 根据主键查询(唯一)-->
 	<select id="get${className_d}ById" parameterType="Integer" resultMap="${className_d}Map">
 		select 
@@ -77,6 +95,22 @@
 		${tableIndex.stringCarrayNames5}
 	    </#list>
 	</update>
+		<!--根据条件update  -->
+    <update id="updateByPrimaryKeySelective" parameterType="${packageName}.entity.${className_d}" >
+	  UPDATE ${className} 
+		SET
+		<set>
+	     <#list tableCarrays as tableCarray>
+			 <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+			    ${tableCarray.carrayName} =  <@mapperEl tableCarray.carrayName_x/>,
+			</if>
+		 </#list>
+	   </set>
+		WHERE
+		<#list tableIndexs as tableIndex>
+		   ${tableIndex.stringCarrayNames5}
+	    </#list>
+	<update>
 	
 	
 	<!--根据条件删除  -->

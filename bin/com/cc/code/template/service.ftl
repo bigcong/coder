@@ -49,5 +49,15 @@ public interface ${className_d}Service{
 	 * 根据主键删除
 	 */
 	public void  delete${className_d}ByIds (String[] ids);
+	/**
+	 *有条件的更新
+	 */
+	
+	public void insertSelective(${className_d} ${className_x});
+	/**
+	 *根据主键有条件的更新
+	 */
+	
+	public void updateByPrimaryKeySelective(${className_d} ${className_x});
 	
 }

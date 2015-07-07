@@ -151,7 +151,7 @@
 							<#list tableCarrays as tableCarray>
 							  <td>
 							    <#if tableCarray.carrayType=="java.util.Date">
-							    <fmt:formatDate value="<@mapperEl pre="a." end="${tableCarray.carrayName_x}" />" pattern="yyyy-MM-dd" />
+							    <fmt:formatDate value="<@mapperEl pre="a." end="${tableCarray.carrayName}" />" pattern="yyyy-MM-dd" />
 			                    <#else>
 			                    <@mapperEl pre="a." end="${tableCarray.carrayName_x}" />
 			                   </#if></td>
