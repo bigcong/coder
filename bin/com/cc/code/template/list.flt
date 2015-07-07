@@ -37,7 +37,7 @@
 		}
 	}
     //新增
-	function load${className_d}() {
+	function load${className_d}(${className_x}Id) {
 		var dg = new $.dialog({
 			title : '新增${className_x}信息',
 			id : '${className_x}_new',
@@ -48,7 +48,7 @@
 			maxBtn : false,
 			xButton : true,
 			resize : false,
-			page : 'load.html'
+			page : 'load.html?${key_x}=" + ${className_x}Id;
 		});
 		dg.ShowDialog();
 	}
