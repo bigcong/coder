@@ -110,7 +110,7 @@
 		<#list tableIndexs as tableIndex>
 		   ${tableIndex.stringCarrayNames5}
 	    </#list>
-	<update>
+	</update>
 	
 	
 	<!--根据条件删除  -->
