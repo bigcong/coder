@@ -12,9 +12,7 @@
 <title>HLRMS-好邻后台管理系统</title>
 <script type="text/javascript" src="../js/datePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="../js/jquery-1.5.1.min.js"></script>
-<!--省、市、区、联动 -->
-<script type="text/javascript" src="../js/area/area.js"></script>
-<script type="text/javascript" src="../js/area/location.js"></script>
+
 
 <link type="text/css" rel="stylesheet" href="../css/main.css" />
 
@@ -60,11 +58,11 @@ body {
 
 	var dg;
 	$(document).ready(function() {
-		showLocation();//
+	
 		dg = frameElement.lhgDG;
 		dg.addBtn('ok', '保存', function() {
 			checkInfo();
-			$("#${className}Form").submit();
+			$("#${className_x}Form").submit();
 		});
 		
 	});
@@ -91,10 +89,10 @@ body {
 </script>
 </head>
 <body>
-	<form action="save.html" name="${className}Form" id="${className}Form"
+	<form action="save.html" name="${className_x}Form" id="${className_x}Form"
 		target="result" method="post" onsubmit="checkInfo();">
 		
-		<input type="hidden" name="id" value="<@mapperEl pre="${className}." end="id" />
+		<input type="hidden" name="${key_x}" value="<@mapperEl pre="${className_x}." end="${key_x}"/>" />
         
 		<table border="0" cellpadding="0" cellspacing="0">
 			
@@ -105,11 +103,11 @@ body {
 				<td>
 				 <#if tableCarray.carrayType=="java.util.Date">
 			        <input type="text" name="${tableCarray.carrayName_x}"
-					value="<fmt:formatDate value="<@mapperEl pre="${className}." end="${tableCarray.carrayName_x}"/>" pattern="yyyy-MM-dd"/>"
+					value="<fmt:formatDate value="<@mapperEl pre="${carrayName_x}." end="${tableCarray.carrayName_x}"/>" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker()" readonly="readonly" style="width: 200px;" />
 			         <#else>
 			         <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}" class="input_txt"
-					value="<@mapperEl pre="${className}." end="${tableCarray.carrayName_x}"/>" disabled="disabled"/>
+					value="<@mapperEl pre="${className_x}." end="${tableCarray.carrayName_x}"/>" />
 			      </#if>
 				</td>
 			</tr>

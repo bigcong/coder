@@ -43,7 +43,7 @@ public class ${className_d}Controller {
 		List<${className_d}> ${className_x}List = 
 		${className_x}Service.listPage${className_d}(${className_x});
 		modelMap.addAttribute("${className_x}List", ${className_x}List);
-		
+		modelMap.addAttribute("${className_x}", ${className_x});
 		return "${className_x}/${className_d}List";
 	}
 	
@@ -92,6 +92,6 @@ public class ${className_d}Controller {
 	@ResponseBody
 	public String delete(${className_d} ${className_x} ,ModelMap modelMap) {
 		${className_x}Service.delete${className_d}(${className_x});
-		return "删除成功";
+		return "success";
 	}
 }

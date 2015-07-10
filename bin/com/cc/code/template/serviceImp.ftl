@@ -35,8 +35,8 @@ public  class ${className_d}ServiceImpl implements ${className_d}Service{
 	}
 	
 	@Override
-	public List<${className_d}> get${className_d}(${className_d} ${className_x}){
-	    return ${className_x}Mapper.get${className_d}(${className_x});
+	public List<${className_d}> list${className_d}(${className_d} ${className_x}){
+	    return ${className_x}Mapper.list${className_d}(${className_x});
 	}  
 	
 	@Override
@@ -52,6 +52,16 @@ public  class ${className_d}ServiceImpl implements ${className_d}Service{
 	@Override
 	public void  delete${className_d}ByIds (String[] ids){
 	    ${className_x}Mapper.delete${className_d}ByIds(ids); 
-	};
+	}
+	
+	@Override
+	public void insertSelective(${className_d} ${className_x}){
+	 ${className_x}Mapper.insertSelective(${className_x});
+	}
+	
+	@Override
+	public void updateByPrimaryKeySelective(${className_d} ${className_x}){
+		 ${className_x}Mapper.updateByPrimaryKeySelective(${className_x});
+	}
 	
 }

@@ -5,7 +5,7 @@
 
 <mapper namespace="${packageName}.mapper.${className_d}Mapper">
 	
-	<resultMap id="${className_d}Map" type="${className_d}">
+	<resultMap id="${className_d}Map" type="${packageName}.entity.${className_d}">
 		<#list tableCarrays as tableCarray>
 		   <result property="${tableCarray.carrayName_x}" column="${tableCarray.carrayName}" />
 		</#list>
@@ -18,7 +18,7 @@
 	
     <!-- 很据条件查询店铺的全部 -->
 	<select id="listPage${className_d}" resultMap="${className_d}Map" 
-	parameterType="${className_d}">
+	parameterType="${packageName}.entity.${className_d}">
 		select
 		<include refid="${className_d}Columns" />
 		from ${className} where 1=1 
@@ -45,8 +45,26 @@
 		)
 	</insert>
 	
+	<insert id="insertSelective" parameterType="${packageName}.entity.${className_d}" useGeneratedKeys="true" keyProperty="id">
+		insert into jz_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+		 <#list tableCarrays as tableCarray>
+		    <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+		      ${tableCarray.carrayName},
+		    </if>
+		</#list>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		<#list tableCarrays as tableCarray>
+		   <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+		     <@mapperEl tableCarray.carrayName_x/>,
+		    </if>
+		 </#list>
+		</trim>
+	</insert>	
+	
 	<!-- 根据主键查询(唯一)-->
-	<select id="get${className_d}ById" parameterType="Integer" resultType="${className_d}">
+	<select id="get${className_d}ById" parameterType="Integer" resultMap="${className_d}Map">
 		select 
 		<include refid="${className_d}Columns" /> 
 		from ${className} where 
@@ -56,7 +74,7 @@
 	</select>
 	
 	<!-- 根据条件查询 ${className}  -->
-	<select id="get${className_d}" resultMap="${className_d}Map" parameterType="${className_d}">
+	<select id="list${className_d}" resultMap="${className_d}Map" parameterType="${packageName}.entity.${className_d}">
 		select
 		<include refid="${className_d}Columns" />
 		from ${className} where 1=1 
@@ -68,7 +86,7 @@
 	</select>
 	
 	<!--更新  -->
-	<update id="update${className_d}" parameterType="${className_d}">
+	<update id="update${className_d}" parameterType="${packageName}.entity.${className_d}">
 		UPDATE ${className} 
 		SET
 		${stringCarrayNames5}
@@ -77,10 +95,26 @@
 		${tableIndex.stringCarrayNames5}
 	    </#list>
 	</update>
+		<!--根据条件update  -->
+    <update id="updateByPrimaryKeySelective" parameterType="${packageName}.entity.${className_d}" >
+	  UPDATE ${className} 
+		SET
+		<set>
+	     <#list tableCarrays as tableCarray>
+			 <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+			    ${tableCarray.carrayName} =  <@mapperEl tableCarray.carrayName_x/>,
+			</if>
+		 </#list>
+	   </set>
+		WHERE
+		<#list tableIndexs as tableIndex>
+		   ${tableIndex.stringCarrayNames5}
+	    </#list>
+	</update>
 	
 	
 	<!--根据条件删除  -->
-	<delete id="delete${className_d}" parameterType="${className_d}">
+	<delete id="delete${className_d}" parameterType="${packageName}.entity.${className_d}">
 		delete from ${className} 
 		where 1=1
 		 <#list tableCarrays as tableCarray>
