@@ -98,7 +98,6 @@
 		<!--根据条件update  -->
     <update id="updateByPrimaryKeySelective" parameterType="${packageName}.entity.${className_d}" >
 	  UPDATE ${className} 
-		SET
 		<set>
 	     <#list tableCarrays as tableCarray>
 			 <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
