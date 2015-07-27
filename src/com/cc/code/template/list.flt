@@ -124,12 +124,7 @@
 	<form action="list.html" method="post" name="${className_x}Form" id="${className_x}Form">
 		<div class="search_div">
 			               <#list tableCarrays as tableCarray>
-							    <#if tableCarray.carrayType=="java.util.Date">
-							     <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}"   onclick="WdatePicker()" readonly="readonly" style="width: 150px;" placeholder="${tableCarray.remark}" value="<@mapperEl pre="${className_x}." end="${tableCarray.carrayName_x}" />" />
-							    <fmt:formatDate value="<@mapperEl pre="a." end="${tableCarray.carrayName_x}" />" pattern="yyyy-MM-dd" />
-			                    <#else>
 			                     <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}"  value="<@mapperEl pre="${className_x}." end="${tableCarray.carrayName_x}" />"  style="width: 150px;" placeholder="${tableCarray.remark}" />
-			                   </#if>
 				           </#list>
 			<a href="javascript:search();" class="myBtn"><em>查询</em></a> 
 			<a href="javascript:load${className_d}(0);" class="myBtn"><em>新增</em></a> 

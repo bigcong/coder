@@ -46,7 +46,7 @@
 	</insert>
 	
 	<insert id="insertSelective" parameterType="${packageName}.entity.${className_d}" useGeneratedKeys="true" keyProperty="id">
-		insert into jz_user
+		insert into ${className}
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		 <#list tableCarrays as tableCarray>
 		    <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">

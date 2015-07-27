@@ -72,7 +72,7 @@ public class ${className_d}Controller {
 			if (${className_x}.get${key_d}() == null || ${className_x}.get${key_d}().intValue() == 0) {
 				${className_x}Service.insertSelective(${className_x});
 			} else {
-				${className_x}Service.updateByPrimaryKeySelective${className_d}(${className_x});
+				${className_x}Service.updateByPrimaryKeySelective(${className_x});
 			}
 		    modelMap.addAttribute("success","success");
 		} catch (Exception e) {

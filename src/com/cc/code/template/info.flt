@@ -101,14 +101,8 @@ body {
 			<tr class="info">
 				<th>${tableCarray.remark}:</th>
 				<td>
-				 <#if tableCarray.carrayType=="java.util.Date">
-			        <input type="text" name="${tableCarray.carrayName_x}"
-					value="<fmt:formatDate value="<@mapperEl pre="${carrayName_x}." end="${tableCarray.carrayName_x}"/>" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker()" readonly="readonly" style="width: 200px;" />
-			         <#else>
 			         <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}" class="input_txt"
 					value="<@mapperEl pre="${className_x}." end="${tableCarray.carrayName_x}"/>" />
-			      </#if>
 				</td>
 			</tr>
            </#list>
