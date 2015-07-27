@@ -61,8 +61,15 @@ body {
 	
 		dg = frameElement.lhgDG;
 		dg.addBtn('ok', '保存', function() {
-			checkInfo();
-			$("#${className_x}Form").submit();
+		 $.ajax({
+	    	    type: 'post',
+	    	    url: 'save.html',
+	    	    data: $("#${className_x}Form").serialize(),
+	    	    success: function(data) {
+	    	    	success();
+	    	    }
+	     });
+		
 		});
 		
 	});
@@ -88,11 +95,13 @@ body {
 	}
 </script>
 </head>
+
+ 
 <body>
 	<form action="save.html" name="${className_x}Form" id="${className_x}Form"
-		target="result" method="post" onsubmit="checkInfo();">
+		target="result" method="post" >
 		
-		<input type="hidden" name="${key_x}" value="<@mapperEl pre="${className_x}." end="${key_x}"/>" />
+		<input type="hidden" name="${key_x}"  value="${r'$'}{${className_x}.${key_x}}"/>
         
 		<table border="0" cellpadding="0" cellspacing="0">
 			
@@ -101,8 +110,7 @@ body {
 			<tr class="info">
 				<th>${tableCarray.remark}:</th>
 				<td>
-			         <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}" class="input_txt"
-					value="<@mapperEl pre="${className_x}." end="${tableCarray.carrayName_x}"/>" />
+			         <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}" class="input_txt" value="${r'$'}{${className_x}.${tableCarray.carrayName_x}}" 	 />
 				</td>
 			</tr>
            </#list>

@@ -29,8 +29,7 @@ public class Build {
          * 
          * 第三个参数:数据源配置
          */
-        Generator generator = new Generator(new String[] { "wash_collect_site" }, "com.haolin",
-                "com/cc/code/template/", cfg);
+        Generator generator = new Generator(new String[] { "" }, "com.haolin", "com/cc/code/template/", cfg);
         generator.generate(true, true, true, true, true, true, true, true, true);
 
     }

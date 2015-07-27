@@ -124,7 +124,7 @@
 	<form action="list.html" method="post" name="${className_x}Form" id="${className_x}Form">
 		<div class="search_div">
 			               <#list tableCarrays as tableCarray>
-			                     <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}"  value="<@mapperEl pre="${className_x}." end="${tableCarray.carrayName_x}" />"  style="width: 150px;" placeholder="${tableCarray.remark}" />
+			                     <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}"    value="${r'$'}{${className_x}.${tableCarray.carrayName_x}}"  style="width: 150px;" placeholder="${tableCarray.remark}" />
 				           </#list>
 			<a href="javascript:search();" class="myBtn"><em>查询</em></a> 
 			<a href="javascript:load${className_d}(0);" class="myBtn"><em>新增</em></a> 
@@ -142,20 +142,19 @@
 			</tr>
 			<c:choose>
 			
-				<c:when test="<@mapperElNotNull className_x/>">
-					<c:forEach items="<@mapperElList className_x/>" var="a" varStatus="vs">
+				<c:when test="${r'$'}{not empty ${className_x}List}">
+					<c:forEach items="${r'$'}{${className_x}List}" var="a" varStatus="vs">
 						<tr class="main_info">
-							<td><@mapperEl pre="vs.index+1"/></td>
+							<td>${r'$'}{vs.index+1}</td>
 							<#list tableCarrays as tableCarray>
 							  <td>
-			                    <@mapperEl pre="a." end="${tableCarray.carrayName_x}" />
+							  ${r'$'}{a.${tableCarray.carrayName_x}}
 			                </td>
 				           </#list>
 							
 							<td>
-							      <a href="javascript:load${className_d}(<@mapperEl pre="a." end="${key_x}"/>);">修改</a>
-								| <a href="javascript:del${className_d}(<@mapperEl pre="a." end="${key_x}"/>);">删除</a>
-								| <a href="javascript:view${className_d}(<@mapperEl pre="a." end="${key_x}"/>);">信息详情</a>
+							      <a href="javascript:load${className_d}(${r'$'}{a.${key_x}});">修改</a>
+								| <a href="javascript:del${className_d}(${r'$'}{a.${key_x}});">删除</a>
 							</td>
 						</tr>
 					</c:forEach>
