@@ -12,6 +12,8 @@
 <title>HLRMS-好邻后台管理系统</title>
 <script type="text/javascript" src="../js/datePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="../js/jquery-1.5.1.min.js"></script>
+<link type="text/css" rel="stylesheet" href="../js/chosen.min.css" />
+<script type="text/javascript" src="../js/chosen.jquery.min.js"></script>
 
 
 <link type="text/css" rel="stylesheet" href="../css/main.css" />
@@ -58,7 +60,7 @@ body {
 
 	var dg;
 	$(document).ready(function() {
-	
+	    $(".chosen-select").chosen();
 		dg = frameElement.lhgDG;
 		dg.addBtn('ok', '保存', function() {
 		 $.ajax({

@@ -20,9 +20,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>HLRMS-好邻后台管理系统</title>
 <link type="text/css" rel="stylesheet" href="../css/main.css" />
+<script type="text/javascript" src="../js/jquery-1.5.1.min.js"></script>
 <link type="text/css" rel="stylesheet" href="../js/chosen.min.css" />
 <script type="text/javascript" src="../js/chosen.jquery.min.js"></script>
-<script type="text/javascript" src="../js/jquery-1.5.1.min.js"></script>
 <script type="text/javascript" src="../js/datePicker/WdatePicker.js"></script>
 <script type="text/javascript" src="../js/lhgdialog/lhgdialog.min.js?t=self&s=areo_blue"></script>
 <script type="text/javascript">
@@ -123,9 +123,9 @@
 <body>
 	<form action="list.html" method="post" name="${className_x}Form" id="${className_x}Form">
 		<div class="search_div">
-			               <#list tableCarrays as tableCarray>
-			                     <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}"    value="${r'$'}{${className_x}.${tableCarray.carrayName_x}}"  style="width: 150px;" placeholder="${tableCarray.remark}" />
-				           </#list>
+		  <#list tableCarrays as tableCarray>
+		 	 <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}"    value="${r'$'}{${className_x}.${tableCarray.carrayName_x}}"  style="width: 150px;" placeholder="${tableCarray.remark}" />
+		  </#list>           
 			<a href="javascript:search();" class="myBtn"><em>查询</em></a> 
 			<a href="javascript:load${className_d}(0);" class="myBtn"><em>新增</em></a> 
 		</div>
@@ -147,9 +147,7 @@
 						<tr class="main_info">
 							<td>${r'$'}{vs.index+1}</td>
 							<#list tableCarrays as tableCarray>
-							  <td>
-							  ${r'$'}{a.${tableCarray.carrayName_x}}
-			                </td>
+							    <td>${r'$'}{a.${tableCarray.carrayName_x}} </td>
 				           </#list>
 							
 							<td>
