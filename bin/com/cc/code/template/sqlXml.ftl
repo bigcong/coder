@@ -4,10 +4,10 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="${packageName}.mapper.${className_d}Mapper">
-	
+	     <!-- 结果对应-->
 	<resultMap id="${className_d}Map" type="${packageName}.entity.${className_d}">
 		<#list tableCarrays as tableCarray>
-		   <result property="${tableCarray.carrayName_x}" column="${tableCarray.carrayName}" />
+		   <result property="${tableCarray.carrayName_x}" column="${tableCarray.carrayName}" /> <!-- ${tableCarray.remark}-->
 		</#list>
 	</resultMap>
 	
@@ -16,17 +16,23 @@
 		  ${stringCarrayNames3}
     </sql>
 	
-    <!-- 很据条件查询店铺的全部 -->
+    <!-- 分页条件查询-->
 	<select id="listPage${className_d}" resultMap="${className_d}Map" 
 	parameterType="${packageName}.entity.${className_d}">
 		select
 		<include refid="${className_d}Columns" />
-		from ${className} where 1=1 
-		 <#list tableCarrays as tableCarray>
-			 <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
-				and ${tableCarray.carrayName}=<@mapperEl tableCarray.carrayName_x/>
-			</if>
+		from ${className} 
+		 <where>
+		  <#list tableCarrays as tableCarray>
+		      <#if tableCarray.carrayType=="String"> 
+                  <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+              <#else> 
+                  <if test="${tableCarray.carrayName_x} !=null">
+              </#if>   
+			           and ${tableCarray.carrayName}=<@mapperEl tableCarray.carrayName_x/>
+			      </if>
 		 </#list>
+		</where>
 	</select>
 	
 	<!-- 查询${className}的数量-->
@@ -44,12 +50,16 @@
 			${stringCarrayNames7}
 		)
 	</insert>
-	
+	<!-- 有条件的插入 -->
 	<insert id="insertSelective" parameterType="${packageName}.entity.${className_d}" useGeneratedKeys="true" keyProperty="id">
 		insert into ${className}
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		 <#list tableCarrays as tableCarray>
-		    <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+		       <#if tableCarray.carrayType=="String"> 
+                  <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+              <#else> 
+                  <if test="${tableCarray.carrayName_x} !=null">
+              </#if>   
 		      ${tableCarray.carrayName},
 		    </if>
 		</#list>
@@ -77,12 +87,18 @@
 	<select id="list${className_d}" resultMap="${className_d}Map" parameterType="${packageName}.entity.${className_d}">
 		select
 		<include refid="${className_d}Columns" />
-		from ${className} where 1=1 
+		from ${className} 
+		<where>
 		 <#list tableCarrays as tableCarray>
-			 <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+			    <#if tableCarray.carrayType=="String"> 
+                  <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+              <#else> 
+                  <if test="${tableCarray.carrayName_x} !=null">
+              </#if>   
 				and ${tableCarray.carrayName}=<@mapperEl tableCarray.carrayName_x/>
 			</if>
 		 </#list>
+		</where>
 	</select>
 	
 	<!--更新  -->
@@ -100,7 +116,11 @@
 	  UPDATE ${className} 
 		<set>
 	     <#list tableCarrays as tableCarray>
-			 <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+			    <#if tableCarray.carrayType=="String"> 
+                  <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+              <#else> 
+                  <if test="${tableCarray.carrayName_x} !=null">
+              </#if>   
 			    ${tableCarray.carrayName} =  <@mapperEl tableCarray.carrayName_x/>,
 			</if>
 		 </#list>
@@ -115,11 +135,17 @@
 	<!--根据条件删除  -->
 	<delete id="delete${className_d}" parameterType="${packageName}.entity.${className_d}">
 		delete from ${className} 
-		where 1=1
+	<where>
 		 <#list tableCarrays as tableCarray>
-			 <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+			    <#if tableCarray.carrayType=="String"> 
+                  <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+              <#else> 
+                  <if test="${tableCarray.carrayName_x} !=null">
+              </#if>   
 				and ${tableCarray.carrayName} =  <@mapperEl tableCarray.carrayName_x/>
 			</if>
 		 </#list>
+		</where> 
+		 
 	</delete>
 </mapper>
