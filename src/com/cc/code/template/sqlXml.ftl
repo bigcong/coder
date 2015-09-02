@@ -66,7 +66,11 @@
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 		<#list tableCarrays as tableCarray>
-		   <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+		<#if tableCarray.carrayType=="String"> 
+		    <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
+		   <#else> 
+		     <if test="${tableCarray.carrayName_x} !=null">
+          </#if>   
 		     <@mapperEl tableCarray.carrayName_x/>,
 		    </if>
 		 </#list>
