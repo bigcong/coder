@@ -1,6 +1,5 @@
 package ${packageName}.entity;
 
-import java.util.*;
 /**
  * ${className}
  */

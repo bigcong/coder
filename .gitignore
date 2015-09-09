@@ -45,3 +45,6 @@ Temporary Items
 src/com/cc/code/build/Build.java
 *.class
 bin/com/cc/code/build/Build.class
+*.class
+bin/com/cc/code/table/Table.class
+src/com/cc/code/build/Build.java
