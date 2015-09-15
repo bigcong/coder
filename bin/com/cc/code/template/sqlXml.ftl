@@ -82,9 +82,7 @@
 		select 
 		<include refid="${className_d}Columns" /> 
 		from ${className} where 
-			<#list tableIndexs as tableIndex>
-		         ${tableIndex.stringCarrayNames5}
-	       </#list>
+		   ${key_x}=${key_x}
 	</select>
 	
 	<!-- 根据条件查询 ${className}  -->
