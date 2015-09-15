@@ -24,6 +24,16 @@ public class Table {
 
     private String key_x;// 主键小写
 
+    private String key_d;// 主键大写
+
+    public String getKey_d() {
+        return key_d;
+    }
+
+    public void setKey_d(String key_d) {
+        this.key_d = key_d;
+    }
+
     private List<TableIndex> tableIndexs;// 表索引
 
     private List<TableBind> tableBinds;// 表主外键
@@ -43,6 +53,8 @@ public class Table {
     private String stringCarrayNames6;// "%s=#%s#,"拼接原字段-小写字段
 
     private String stringCarrayNames7;// "%s=#%s#,"拼接原字段-小写字段
+
+    private String stringCarrayNames8;//根据主键得到实体
 
     public Table(String className, String classNameD, String classNameX, String packageName,
             List<TableCarray> tableCarrays, List<TableIndex> tableIndexs, List<TableBind> tableBinds,
@@ -68,30 +80,31 @@ public class Table {
     }
 
     public String getKey() {
-        return tableIndexs.get(0).getCarrayNames().get(0);
+        return key;
     }
 
     public void setKey(String key) {
         this.key = key;
     }
 
-    public String getKey_x() {
-        return tableIndexs.get(0).getCarrayNames_x().get(0);
+    public String getStringCarrayNames8() {
+        return stringCarrayNames8;
     }
 
-    public void setKey_x(String key_x) {
-        this.key_x = key_x;
-    }
-
-    public String getKey_d() {
-        return tableIndexs.get(0).getCarrayNames_d().get(0);
-    }
-
-    public void setKey_d(String key_d) {
+    public void setStringCarrayNames8(String stringCarrayNames8) {
+        this.stringCarrayNames8 = stringCarrayNames8;
     }
 
     public String getClassName() {
         return className;
+    }
+
+    public String getKey_x() {
+        return key_x;
+    }
+
+    public void setKey_x(String key_x) {
+        this.key_x = key_x;
     }
 
     public void setClassName(String className) {

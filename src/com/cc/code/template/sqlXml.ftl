@@ -82,7 +82,7 @@
 		select 
 		<include refid="${className_d}Columns" /> 
 		from ${className} where 
-		   ${key_x}=${key_x}
+		  	${stringCarrayNames8}
 	</select>
 	
 	<!-- 根据条件查询 ${className}  -->
@@ -109,9 +109,7 @@
 		SET
 		${stringCarrayNames5}
 		WHERE
-		<#list tableIndexs as tableIndex>
-		${tableIndex.stringCarrayNames5}
-	    </#list>
+		${stringCarrayNames8}
 	</update>
 		<!--根据条件update  -->
     <update id="updateByPrimaryKeySelective" parameterType="${packageName}.entity.${className_d}" >
@@ -128,9 +126,7 @@
 		 </#list>
 	   </set>
 		WHERE
-		<#list tableIndexs as tableIndex>
-		   ${tableIndex.stringCarrayNames5}
-	    </#list>
+	${stringCarrayNames8}
 	</update>
 	
 	

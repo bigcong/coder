@@ -127,11 +127,10 @@ public class TableUtil {
         DatabaseMetaData dmd = conn.getMetaData();
         Map map = new HashMap();
         ResultSet rs = null;
-        rs = dmd.getExportedKeys(null, null, tableName);
-        System.out.println(rs);
+        rs = dmd.getExportedKeys("", "", tableName);
 
         map.put("ExportedKeys", resToList(rs));
-        rs = dmd.getImportedKeys(null, null, tableName);
+        rs = dmd.getImportedKeys("", "", tableName);
         map.put("ImportedKeys", resToList(rs));
         return map;
     }
@@ -373,6 +372,21 @@ public class TableUtil {
             table = new Table(tableName, className_d, className_x, packageName, tableCarrays, tableIndexs, tableBinds,
                     upperTableNames, stringCarrayNames1, stringCarrayNames2, stringCarrayNames3, stringCarrayNames4,
                     stringCarrayNames5, stringCarrayNames6, stringCarrayNames7);
+            String stringCarrayNames8 = "";
+            if (table.getKey() == null) {
+                ResultSet rs = conn.getMetaData().getPrimaryKeys("", "", tableName);
+                while (rs.next()) {
+                    String primaryKey = rs.getString("COLUMN_NAME");//获取主键名字
+                    table.setKey(primaryKey);
+                    table.setKey_x(StringUtil.lowerFirst(StringUtil.newTableName(primaryKey)));
+                    table.setKey_d(StringUtil.upperFirst(StringUtil.newTableName(primaryKey)));
+                    stringCarrayNames8 += String.format("%s=#{%s}", primaryKey, table.getKey_x());
+                }
+
+            }
+            if (!stringCarrayNames8.equals("")) {
+                table.setStringCarrayNames8(stringCarrayNames8);
+            }
 
             tables.add(table);
         }
