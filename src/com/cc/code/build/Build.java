@@ -21,15 +21,15 @@ public class Build {
 
     public static void generator() throws Exception {
         // 得到数据源
-        DataSourceConfig cfg = new DataSourceConfig("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/wash_haolin",
-                "root", "root", DataSourceConfig.MYSQL);
+        DataSourceConfig cfg = new DataSourceConfig("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/cc",
+                "root", "cc", DataSourceConfig.MYSQL);
 
         /**
          * 第一个参数:选择你要生成的表名,此参数可选。不写默认生成全部 第二个参数:生成的文件的作存放的包名，默认是D盘 第三个参数:模板文件的位置
          * 
          * 第三个参数:数据源配置
          */
-        Generator generator = new Generator(new String[] { "" }, "com.haolin", "com/cc/code/template/", cfg);
+        Generator generator = new Generator(new String[] { "menu" }, "com.cc", "com/cc/code/template/", cfg);
         generator.generate(true, true, true, true, true, true, true, true, true);
 
     }

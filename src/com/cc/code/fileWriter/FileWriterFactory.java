@@ -125,21 +125,21 @@ public class FileWriterFactory {
 				packageName = "mybatis";// 获得这个文件的存储路径(外部传进来的)
 				break;
 			case LISTJSP:
-				fileName = "List.jsp";
+				fileName = "Controller.scala";
 				packageName = ".jsp." + table.getClassName_x();
 				break;
 			case INFOJSP:
-				fileName = "Info.jsp";
+				fileName = "Service.scala";
 				packageName = ".jsp." + table.getClassName_x();
 				break;
 			case VIEWJSP:
-				fileName = "View.jsp";
+				fileName = "Dao" + ".scala";
 				packageName = ".jsp." + table.getClassName_x();
 				break;
 			}
 			packageName = packageName.replace(".", "/");
 
-			String url = "D:/generate/" + packageName + "/"
+			String url = "/Users/bigcong/cc/template" + packageName + "/"
 					+ table.getClassName_d() + fileName;
 
 			File file = new File(url);

@@ -24,11 +24,11 @@
 		from ${className} 
 		 <where>
 		  <#list tableCarrays as tableCarray>
-		      <#if tableCarray.carrayType=="String"> 
+		      <#if tableCarray.carrayType=="String">
                   <if test="${tableCarray.carrayName_x} !=null and ${tableCarray.carrayName_x}!=''">
-              <#else> 
+              <#else>
                   <if test="${tableCarray.carrayName_x} !=null">
-              </#if>   
+              </#if>
 			           and ${tableCarray.carrayName}=<@mapperEl tableCarray.carrayName_x/>
 			      </if>
 		 </#list>

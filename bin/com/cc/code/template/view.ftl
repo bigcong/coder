@@ -1,40 +1,69 @@
-<#macro mapperEl pre="" end="">
-  ${r"${"}${pre}${end}}
-</#macro>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>HLRMS-好邻后台管理系统</title>
-<link type="text/css" rel="stylesheet" href="../css/main.css"/>
-<style type="text/css">
-body{width:100%;height:100%;background-color: #FFFFFF;text-align: center;}
-.input_txt{width:200px;height:20px;line-height:20px;}
-.info{height:40px;line-height:40px;}
-.info th{text-align: right;width:65px;color: #4f4f4f;padding-right:5px;font-size: 13px;}
-.info td{text-align:left;}
-</style>
-</head>
-<body>
-	<table border="0" cellpadding="0" cellspacing="0">
-	     <#list tableCarrays as tableCarray>
-		   <tr class="info">
-				<th>${tableCarray.remark}:</th>
-				<td>
-				 <#if tableCarray.carrayType=="java.util.Date">
-			        <input type="text" 
-					value="<fmt:formatDate value="<@mapperEl pre="${className}." end="${tableCarray.carrayName_x}"/>" pattern="yyyy-MM-dd"/>"
-					 style="width: 200px;" disabled="disabled"/>
-			         <#else>
-			         <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}" class="input_txt"
-					value="<@mapperEl pre="${className}." end="${tableCarray.carrayName_x}"/>" disabled="disabled"/>
-			      </#if>
-				</td>
-			</tr>
-		 </#list>
-		</table>
-</body>
-</html>
+package dao
+
+import javax.inject.Inject
+
+import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfigProvider}
+import slick.driver.JdbcProfile
+import slick.driver.MySQLDriver.api._
+
+import model.Model.${className_d}Model
+import model.Type.${className_d}Type
+/**
+  * Created by bigcong
+  */
+class ${className_d}Dao @Inject()(protected val dbConfigProvider: DatabaseConfigProvider) extends HasDatabaseConfigProvider[JdbcProfile] {
+  private lazy val ${className_x}Table = TableQuery[${className_d}Table] //活动表
+  /**
+    * 统筹查询
+    * @param ${className_x}Model
+    * @return
+    */
+  def list(${className_x}Model: ${className_d}Model) = {
+    var filter = ${className_x}Table.filter(_.${key_x} > 0);
+   <#list tableCarrays as tableCarray>
+                 <#if tableCarray.carrayType=="String">
+    if (!${className_x}Model.${tableCarray.carrayName_x}.equals("")) {
+                 <#else>
+    if (${className_x}Model.${tableCarray.carrayName_x}!=0) {
+                  </#if>
+    filter = filter.filter(_.${tableCarray.carrayName_x}=== ${className_x}Model.${tableCarray.carrayName_x})
+    }
+    </#list>
+    val action = filter.map(i => (<#list tableCarrays as tableCarray>i.${tableCarray.carrayName_x},</#list>)).result
+    db.run(action)
+  }
+
+  /**
+    * 插入或者更新
+    * @param ${className_x}Type
+    * @return
+    */
+  def insertOrUpdate( ${className_x}Type:  ${className_d}Type) = db.run(
+    ${className_x}Table.insertOrUpdate(${className_x}Type)
+  )
+
+  /**
+    * 根据id 获取一条数据
+    * @param ${key_x}
+    * @return
+    */
+  def get(${key_x}: Int) = db.run(
+    ${className_x}Table.filter(_.${key_x} === ${key_x}).map (i =>(<#list tableCarrays as tableCarray>i.${tableCarray.carrayName_x},</#list>) ).result
+  )
+
+
+}
+
+private class ${className_d}Table(tag: Tag) extends Table[${className_d}Type](tag, "${className}") {
+<#list tableCarrays as tableCarray>
+                  <#if tableCarray.carrayName_x== key_x>
+  def ${tableCarray.carrayName_x}=column[${tableCarray.carrayType}]("${tableCarray.carrayName}",O.PrimaryKey, O.AutoInc);// ${tableCarray.remark}
+                 <#else>
+  def ${tableCarray.carrayName_x}=column[${tableCarray.carrayType}]("${tableCarray.carrayName}");// ${tableCarray.remark}
+                  </#if>
+ </#list>
+  def * = (<#list tableCarrays as tableCarray>${tableCarray.carrayName_x},</#list>)
+}
+type ${className_d}Type = (<#list tableCarrays as tableCarray>${tableCarray.carrayType},</#list>)// ${className}
+case class ${className_d}Model(<#list tableCarrays as tableCarray><#if tableCarray.carrayType=="String">var ${tableCarray.carrayName_x}: ${tableCarray.carrayType} = "", <#else>var ${tableCarray.carrayName_x}: ${tableCarray.carrayType} = 0,</#if></#list>)// ${className}
+

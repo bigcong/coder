@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ${packageName}.service.${className_d}Service;
 
 
-@Controller
+@RestController
 @RequestMapping(value = "/${className_x}")
 public class ${className_d}Controller {
 
@@ -38,13 +38,9 @@ public class ${className_d}Controller {
 	 * @return
 	 */
 	@RequestMapping("list")
-	public String list(${className_d} ${className_x},ModelMap modelMap) {
-		
-		List<${className_d}> ${className_x}List = 
-		${className_x}Service.listPage${className_d}(${className_x});
-		modelMap.addAttribute("${className_x}List", ${className_x}List);
-		modelMap.addAttribute("${className_x}", ${className_x});
-		return "${className_x}/${className_d}List";
+	public List<${className_d}> list(${className_d} ${className_x}) {
+		List<${className_d}> ${className_x}List =${className_x}Service.listPage${className_d}(${className_x});
+		return ${className_x}List;
 	}
 	
 	/**
@@ -53,11 +49,11 @@ public class ${className_d}Controller {
 	 * @return
 	 */
 	@RequestMapping(value = "/load")
-	public String load( ${className_d} ${className_x},ModelMap modelMap) {
+	public ${className_d} load( ${className_d} ${className_x}) {
 	 ${className_x} = ${className_x}Service.get${className_d}ById(${className_x}.get${key_d}());
-		modelMap.addAttribute("${className_x}", ${className_x});
+
 		
-		return "${className_x}/${className_d}Info";
+		return ${className_x};
 	}
 
 	/**
@@ -67,18 +63,18 @@ public class ${className_d}Controller {
 	 * @return
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(${className_d} ${className_x},ModelMap modelMap) {
+	public ${className_d} save(${className_d} ${className_x}) {
 	    try {
 			if (${className_x}.get${key_d}() == null || ${className_x}.get${key_d}().intValue() == 0) {
 				${className_x}Service.insertSelective(${className_x});
 			} else {
 				${className_x}Service.updateByPrimaryKeySelective(${className_x});
 			}
-		    modelMap.addAttribute("success","success");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "system/save_result";
+		return ${className_x};
 	}
 
 
@@ -89,8 +85,7 @@ public class ${className_d}Controller {
 	 * @param  ${className_x}Id
 	 */
 	@RequestMapping(value = "/delete")
-	@ResponseBody
-	public String delete(${className_d} ${className_x} ,ModelMap modelMap) {
+	public String delete(${className_d} ${className_x}) {
 		${className_x}Service.delete${className_d}(${className_x});
 		return "success";
 	}

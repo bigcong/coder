@@ -419,7 +419,7 @@ public class TableUtil {
             String carrayType = map.get("javaForType").toString();// 字段类型
             //转为它的包装类
             if (carrayType.equals("int")) {
-                carrayType = "Integer";
+                carrayType = "Int";
             }
             else if (carrayType.equals("short")) {
                 carrayType = "Short";
@@ -432,6 +432,9 @@ public class TableUtil {
             }
             else if (carrayType.equals("boolean")) {
                 carrayType = "Integer";
+            }
+            else if (carrayType.equals("byte")) {
+                carrayType = "Int";
             }
             else if (carrayType.equals("double")) {
                 carrayType = "Double";
