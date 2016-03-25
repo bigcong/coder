@@ -25,7 +25,7 @@ public class TableUtil {
      * 功能描述：得到指定参数的表信息参数说明： 参数:catalog:目录名称，一般都为空. 参数：schema:数据库名，对于oracle来说就用户名
      * 参数：tablename:表名称 参数：type :表的类型(TABLE |
      * VIEW)注意：在使用过程中，参数名称必须使用大写的。否则得到什么东西。
-     * 
+     *
      * @throws SQLException
      */
     public static final List<String> getTableNanes(Connection conn, String... tableNames) throws SQLException {
@@ -34,24 +34,23 @@ public class TableUtil {
 
         List<String> tableNanes = new ArrayList<String>();
         /**
-         * 
+         *
          * 参数： catalog - 类别名称，因为存储在数据库中，所以它必须匹配类别名称。该参数为 "" 则检索没有类别的描述，为 null
          * 则表示该类别名称不应用于缩小搜索范围 schemaPattern - 模式名称的模式，因为存储在数据库中，所以它必须匹配模式名称。该参数为
          * "" 则检索那些没有模式的描述，为 null 则表示该模式名称不应用于缩小搜索范围 tableNamePattern -
          * 表名称模式，因为存储在数据库中，所以它必须匹配表名称 types - 要包括的表类型组成的列表，null 表示返回所有类型 返回：
-         * 
+         *
          * ResultSet - 每一行都是一个表描述 抛出： SQLException - 如果发生数据库访问错误
          */
         List<ResultSet> sets = new ArrayList<ResultSet>();
 
         if (tableNames != null && tableNames.length != 0) {
             for (String tableName : tableNames) {
-                ResultSet rs = dme.getTables("", "", tableName, new String[] { "TABLE" });
+                ResultSet rs = dme.getTables("", "", tableName, new String[]{"TABLE"});
                 sets.add(rs);
             }
-        }
-        else {
-            ResultSet rs = dme.getTables("", "", "", new String[] { "TABLE" });
+        } else {
+            ResultSet rs = dme.getTables("", "", "", new String[]{"TABLE"});
             sets.add(rs);
         }
 
@@ -66,7 +65,7 @@ public class TableUtil {
 
     /**
      * 取得表中的字段
-     * 
+     *
      * @throws Exception
      */
     public static final List<Map<String, Object>> getCarrays(Connection conn, String tableName) throws Exception {
@@ -83,7 +82,7 @@ public class TableUtil {
 
     /**
      * 取得表中的字段的注视
-     * 
+     *
      * @throws Exception
      */
     public static final String getRemark(Connection conn, String tableName, String columnName) throws Exception {
@@ -105,7 +104,7 @@ public class TableUtil {
 
     /**
      * 取得表中的索引
-     * 
+     *
      * @return
      * @throws SQLException
      */
@@ -117,7 +116,7 @@ public class TableUtil {
 
     /**
      * 取得主外键关系
-     * 
+     *
      * @param conn
      * @param table
      * @return
@@ -137,7 +136,7 @@ public class TableUtil {
 
     /**
      * ResultSet转List
-     * 
+     *
      * @param rs
      * @return
      * @throws SQLException
@@ -152,7 +151,7 @@ public class TableUtil {
 
     /**
      * List<ResultSet>转List
-     * 
+     *
      * @param rs
      * @return
      * @throws SQLException
@@ -169,7 +168,7 @@ public class TableUtil {
 
     /**
      * ResultSet转Map
-     * 
+     *
      * @param rs
      * @return
      * @throws SQLException
@@ -186,7 +185,7 @@ public class TableUtil {
 
     /**
      * 取得字段详情
-     * 
+     *
      * @param rs
      * @return
      * @throws Exception
@@ -251,23 +250,14 @@ public class TableUtil {
     }
 
     /**
-     * 
-     * @param conn
-     *            数据库连接
-     * @param sqlMapPackage
-     *            //生成的文件存放的总位置
-     * @param pojoPackage
-     *            实体类的位置
-     * @param daoPackage
-     *            接口的位置
-     * @param impPackage
-     *            实现类的位置
-     * @param extPackage
-     *            拓展类的位置
-     * @param xmlPackage
-     *            mybatis xml的位置
-     * @param xmlURL
-     *            模板文件相对地址
+     * @param conn          数据库连接
+     * @param sqlMapPackage //生成的文件存放的总位置
+     * @param pojoPackage   实体类的位置
+     * @param daoPackage    接口的位置
+     * @param impPackage    实现类的位置
+     * @param extPackage    拓展类的位置
+     * @param xmlPackage    mybatis xml的位置
+     * @param xmlURL        模板文件相对地址
      * @return
      * @throws Exception
      */
@@ -377,7 +367,7 @@ public class TableUtil {
                 ResultSet rs = conn.getMetaData().getPrimaryKeys("", "", tableName);
                 while (rs.next()) {
                     String primaryKey = rs.getString("COLUMN_NAME");//获取主键名字
-                    table.setKey(primaryKey);
+
                     table.setKey_x(StringUtil.lowerFirst(StringUtil.newTableName(primaryKey)));
                     table.setKey_d(StringUtil.upperFirst(StringUtil.newTableName(primaryKey)));
                     stringCarrayNames8 += String.format("%s=#{%s}", primaryKey, table.getKey_x());
@@ -395,7 +385,6 @@ public class TableUtil {
     }
 
     /**
-     * 
      * @param conn
      * @param tableName
      * @return
@@ -420,21 +409,18 @@ public class TableUtil {
             //转为它的包装类
             if (carrayType.equals("int")) {
                 carrayType = "Integer";
-            }
-            else if (carrayType.equals("short")) {
+            } else if (carrayType.equals("short")) {
                 carrayType = "Short";
-            }
-            else if (carrayType.equals("java.util.Date")) {
+            } else if (carrayType.equals("java.util.Date")) {
                 carrayType = "String";
-            }
-            else if (carrayType.equals("java.sql.Time")) {
+            } else if (carrayType.equals("java.sql.Time")) {
                 carrayType = "String";
-            }
-            else if (carrayType.equals("boolean")) {
+            } else if (carrayType.equals("boolean")) {
                 carrayType = "Integer";
-            }
-            else if (carrayType.equals("double")) {
+            } else if (carrayType.equals("double")) {
                 carrayType = "Double";
+            } else if (carrayType.equals("long")) {
+                carrayType = "Long";
             }
 
             tabelCarray = new TableCarray(columnLabel, carrayName_d, carrayName_x, carrayType, "");

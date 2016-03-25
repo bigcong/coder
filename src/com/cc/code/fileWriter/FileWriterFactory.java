@@ -62,7 +62,7 @@ public class FileWriterFactory {
 		if (cfg == null) {
 			cfg = new Configuration();
 			url = FileWriterFactory.class.getResource("/").getPath() + url;
-
+            url.replaceAll("bin","src");
 			System.out.println(url);
 			File file = new File(url);
 			try {
@@ -139,7 +139,7 @@ public class FileWriterFactory {
 			}
 			packageName = packageName.replace(".", "/");
 
-			String url = "D:/generate/" + packageName + "/"
+			String url = "/generate/" + packageName + "/"
 					+ table.getClassName_d() + fileName;
 
 			File file = new File(url);
