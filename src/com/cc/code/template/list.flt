@@ -168,3 +168,56 @@
 	</form>
 </body>
 </html>
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>通话记录</title>
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid" ng-app="MyFilterApp" ng-controller="callRecordsController">
+        <div class="page-header">
+            <h3>通话记录 <small></small></h3>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>序号</th>
+            		<#list tableCarrays as tableCarray>
+            				   <th>${tableCarray.remark}</th>
+            				</#list>
+            				<th>操作</th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="record in callRecords">
+                <tr>
+                    <td ng-bind="$index+1"></td>
+                    <td>{{record.callId}}</td>
+                    	<#list tableCarrays as tableCarray>
+                    							    <td>{{a.${tableCarray.carrayName_x}}}</td>
+                    	</#list>
+                </tr>
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pagination pagination-lg" ng-repeat="pageNo in currentPage">
+                <li ng-show="$index==0"><a href aria-label="Previous" data="{{page.page.currentPage-1}}" ng-click="GoPage(page.page.currentPage-1)"><span aria-hidden="true">«</span></a></li>
+                <li><a href data="{{pageNo}}" ng-click="GoPage(pageNo)">{{pageNo}}</a></li>
+                <li ng-show="$index==4"> <a href aria-label="Next" data="{{page.page.currentPage+1}}" ng-click="GoPage(page.page.currentPage+1)"><span aria-hidden="true">»</span></a></li>
+            </ul>
+        </nav>
+    </div>
+    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="contact.js"></script>
+</body>
+
+</html>

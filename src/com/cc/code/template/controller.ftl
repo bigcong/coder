@@ -1,22 +1,11 @@
 package ${packageName}.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 import ${packageName}.entity.${className_d};
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import ${packageName}.service.${className_d}Service;
+
+
+
+
 
 
 @RestController
@@ -65,7 +54,7 @@ public class ${className_d}Controller {
 	 * @return
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(${className_d} ${className_x}) {
+	public ${className_d} save(${className_d} ${className_x}) {
 	    try {
 			if (${className_x}.get${key_d}() == null || ${className_x}.get${key_d}().intValue() == 0) {
 				${className_x}Service.insertSelective(${className_x});

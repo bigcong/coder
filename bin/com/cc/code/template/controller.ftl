@@ -1,20 +1,11 @@
 package ${packageName}.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
-
-
 import ${packageName}.entity.${className_d};
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
 import ${packageName}.service.${className_d}Service;
+
+
+
+
 
 
 @RestController
@@ -52,7 +43,7 @@ public class ${className_d}Controller {
 	 */
 	@RequestMapping(value = "/load")
 	public ${className_d}  load( ${className_d} ${className_x}) {
-	 ${className_x} = ${className_x}Service.get${className_d}ById(${className_x});
+	 ${className_x} = ${className_x}Service.get${className_d}ById(${className_x}.get${key_d}());
 		return ${className_x};
 	}
 
@@ -84,7 +75,7 @@ public class ${className_d}Controller {
 	 * @param  ${className_x}
 	 */
 	@RequestMapping(value = "/delete")
-	public String delete(${className_d} ${className_x} ) {
+	public String delete(${className_d} ${className_x} ,ModelMap modelMap) {
 		${className_x}Service.delete${className_d}(${className_x});
 		return "success";
 	}

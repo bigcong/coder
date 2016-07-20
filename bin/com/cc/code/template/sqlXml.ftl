@@ -51,7 +51,7 @@
 		)
 	</insert>
 	<!-- 有条件的插入 -->
-	<insert id="insertSelective" parameterType="${packageName}.entity.${className_d}" useGeneratedKeys="true" keyProperty="${key_x}">
+	<insert id="insertSelective" parameterType="${packageName}.entity.${className_d}" useGeneratedKeys="true" keyProperty="id">
 		insert into ${className}
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		 <#list tableCarrays as tableCarray>
@@ -78,7 +78,7 @@
 	</insert>	
 	
 	<!-- 根据主键查询(唯一)-->
-	<select id="get${className_d}ById" parameterType="${packageName}.entity.${className_d}" resultMap="${className_d}Map">
+	<select id="get${className_d}ById" parameterType="Integer" resultMap="${className_d}Map">
 		select 
 		<include refid="${className_d}Columns" /> 
 		from ${className} where 

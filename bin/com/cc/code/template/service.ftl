@@ -27,7 +27,7 @@ public interface ${className_d}Service{
 	/**
 	 * 根据主键查询(唯一)
 	 */
-	public ${className_d} get${className_d}ById(${className_d} ${className_x});
+	public ${className_d} get${className_d}ById(Integer id);
 	
 	/**
 	 * 根据根据条件查询${className_d} 
