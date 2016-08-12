@@ -51,7 +51,7 @@
 		)
 	</insert>
 	<!-- 有条件的插入 -->
-	<insert id="insertSelective" parameterType="${packageName}.entity.${className_d}" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertSelective" parameterType="${packageName}.entity.${className_d}" useGeneratedKeys="true" keyProperty="${key_x}">
 		insert into ${className}
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 		 <#list tableCarrays as tableCarray>
