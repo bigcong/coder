@@ -12,9 +12,7 @@ import com.cc.code.util.TableUtil;
 import freemarker.template.Configuration;
 
 /**
- * 
  * @author jlon
- *
  */
 public class Generator {
 
@@ -23,35 +21,37 @@ public class Generator {
     private String templateUrl;
 
     private String[] tableNames;
+    private String url;
 
     private DataSourceConfig cfg;
 
     /**
      * @throws Exception
      */
-    public Generator(String packageName, String templateUrl, DataSourceConfig cfg) {
+    public Generator(String packageName, String templateUrl, DataSourceConfig cfg, String url) {
         super();
         this.packageName = packageName;
         this.templateUrl = templateUrl;
         this.cfg = cfg;
+        this.url = url;
     }
 
     /**
      * @throws Exception
      */
-    public Generator(String[] tableNames, String packageName, String templateUrl, DataSourceConfig cfg) {
+    public Generator(String[] tableNames, String packageName, String templateUrl, DataSourceConfig cfg,String url) {
         super();
         this.packageName = packageName;
         this.tableNames = tableNames;
         this.templateUrl = templateUrl;
         this.cfg = cfg;
+        this.url=url;
     }
 
     /**
-     * 
      * {方法功能中文描述}
-     * 
-     * @param pojo  
+     *
+     * @param pojo
      * @param controller
      * @param mapper
      * @param service
@@ -65,9 +65,9 @@ public class Generator {
      * @datetime:2015年9月15日下午3:25:45
      */
     public void generate(boolean pojo, boolean controller, boolean mapper, boolean service, boolean serviceImpl,
-            boolean sqlXml, boolean listJsp, boolean infoJsp, boolean viewJsp)
+                         boolean sqlXml, boolean listJsp, boolean infoJsp, boolean viewJsp)
 
-    throws Exception {
+            throws Exception {
 
         //获得数据库连接
         Connection conn = ConnectionFactory.getConnection(cfg);
@@ -111,52 +111,51 @@ public class Generator {
     }
 
     /**
-     * 
+     *
      */
     public void buildFactory(Table table, Configuration configuration, int type) {
         String templateUrl = "";
         switch (type) {
-        case FileWriterFactory.POJO:
-            templateUrl = "pojo.ftl";
-            break;
-        case FileWriterFactory.CONTROLLER:
-            templateUrl = "controller.ftl";
-            break;
-        case FileWriterFactory.MAPPER:
-            templateUrl = "mapper.ftl";
-            break;
-        case FileWriterFactory.SERVICE:
-            templateUrl = "service.ftl";
-            break;
-        case FileWriterFactory.SERVICE_IMPL:
-            templateUrl = "serviceImp.ftl";
-            break;
-        case FileWriterFactory.SQLXML:
-            templateUrl = "sqlXml.ftl";
-            break;
-        case FileWriterFactory.LISTJSP:
-            templateUrl = "list.flt";
-            break;
-        case FileWriterFactory.INFOJSP:
-            templateUrl = "info.flt";
-            break;
-        case FileWriterFactory.VIEWJSP:
-            templateUrl = "view.ftl";
-            break;
+            case FileWriterFactory.POJO:
+                templateUrl = "pojo.ftl";
+                break;
+            case FileWriterFactory.CONTROLLER:
+                templateUrl = "controller.ftl";
+                break;
+            case FileWriterFactory.MAPPER:
+                templateUrl = "mapper.ftl";
+                break;
+            case FileWriterFactory.SERVICE:
+                templateUrl = "service.ftl";
+                break;
+            case FileWriterFactory.SERVICE_IMPL:
+                templateUrl = "serviceImp.ftl";
+                break;
+            case FileWriterFactory.SQLXML:
+                templateUrl = "sqlXml.ftl";
+                break;
+            case FileWriterFactory.LISTJSP:
+                templateUrl = "list.flt";
+                break;
+            case FileWriterFactory.INFOJSP:
+                templateUrl = "info.flt";
+                break;
+            case FileWriterFactory.VIEWJSP:
+                templateUrl = "view.ftl";
+                break;
         }
         build(table, configuration, templateUrl, type);
     }
 
     /**
-    * 
-    * @param table
-    * @param configuration
-    */
+     * @param table
+     * @param configuration
+     */
     public void build(Table table, Configuration configuration, String templateUrl, int type) {
         FileWriterFactory.dataSourceOut(configuration, // 解析对象
                 templateUrl, //模板名称
                 table, //数据对象
-                type);
+                type, url);
     }
 
 }

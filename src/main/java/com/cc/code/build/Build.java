@@ -25,7 +25,7 @@ public class Build {
          *
          * 第三个参数:数据源配置
          */
-        Generator generator = new Generator(new String[]{"config","config_attribute"}, "com.cc", "com/cc/code/template/", cfg);
+        Generator generator = new Generator(new String[]{"config","config_attribute"}, "com.cc", "template/", cfg,"/generate");
         generator.generate(true, true, true, true, true, true, true, true, true);
 
     }

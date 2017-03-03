@@ -1,51 +1,25 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
-.[class]
-# Folder config file
-Desktop.ini
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
 
-
-# Windows shortcuts
-*.lnk
-
-# =========================
-# Operating System Files
-# =========================
-
-# OSX
-# =========================
-
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Thumbnails
-._*
-
-# Files that might appear on external disk
-.Spotlight-V100
-.Trashes
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-src/com/cc/code/build/Build.java
-*.class
-bin/com/cc/code/build/Build.class
-*.class
-bin/com/cc/code/table/Table.class
-src/com/cc/code/build/Build.java
-src/com/cc/code/build/Build.java
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
