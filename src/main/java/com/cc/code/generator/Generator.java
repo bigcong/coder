@@ -18,7 +18,6 @@ public class Generator {
 
     private String packageName;
 
-    private String templateUrl;
 
     private String[] tableNames;
     private String url;
@@ -28,10 +27,9 @@ public class Generator {
     /**
      * @throws Exception
      */
-    public Generator(String packageName, String templateUrl, DataSourceConfig cfg, String url) {
+    public Generator(String packageName, DataSourceConfig cfg, String url) {
         super();
         this.packageName = packageName;
-        this.templateUrl = templateUrl;
         this.cfg = cfg;
         this.url = url;
     }
@@ -39,11 +37,10 @@ public class Generator {
     /**
      * @throws Exception
      */
-    public Generator(String[] tableNames, String packageName, String templateUrl, DataSourceConfig cfg,String url) {
+    public Generator(String[] tableNames, String packageName, DataSourceConfig cfg,String url) {
         super();
         this.packageName = packageName;
         this.tableNames = tableNames;
-        this.templateUrl = templateUrl;
         this.cfg = cfg;
         this.url=url;
     }
@@ -76,7 +73,7 @@ public class Generator {
         List<Table> tables = TableUtil.getTables(conn, packageName, tableNames);
 
         //获取模板
-        Configuration configuration = FileWriterFactory.getConfiguration(templateUrl);
+        Configuration configuration = FileWriterFactory.getConfiguration("");
 
         for (Table table : tables) {
             if (pojo) {
