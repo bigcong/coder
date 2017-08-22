@@ -30,7 +30,7 @@ public  class ${className_d}ServiceImpl implements ${className_d}Service{
 	}
 	
 	@Override
-	public ${className_d} get${className_d}ById(Integer id){
+	public ${className_d} get${className_d}ById(String id){
 	    return ${className_x}Mapper.get${className_d}ById(id);
 	}
 	

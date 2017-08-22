@@ -1,24 +1,24 @@
 package ${packageName}.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import ${packageName}.entity.${className_d};
-import ${packageName}.service.${className_d}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import ${packageName}.service.${className_d}Service;
 
-@RestController
+@Controller
 @RequestMapping(value = "/${className_x}")
 public class ${className_d}Controller {
 
@@ -31,42 +31,64 @@ public class ${className_d}Controller {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(format,true));
 	}
 
-	/**
-	 * 显示列表
-	 * @param ${className_x}
-	 * @return
-	 */
-	@RequestMapping("list")
-	public Map<String, Object> list(${className_d} ${className_x}) {
-		
-		List<${className_d}> ${className_x}List = ${className_x}Service.listPage${className_d}(${className_x});
-	    Map<String, Object> map = new HashMap<String, Object>();
-        map.put("list", ${className_x}List);
-        map.put("page", ${className_x});
-		return map;
-	}
-	
-	/**
-	 * 请求编辑页面
-	 * @param ${className_x}
-	 * @return
-	 */
-	@RequestMapping(value = "/load")
-	public ${className_d}  load( ${className_d} ${className_x}) {
-	 ${className_x} = ${className_x}Service.get${className_d}ById(${className_x}.get${key_d}());
-		return ${className_x};
-	}
+
+
+/**
+* 显示列表
+* @return
+*/
+@RequestMapping("list")
+public String list(${className_d} ${className_x},ModelMap modelMap) {
+
+List<${className_d}> ${className_x}List =
+${className_x}Service.listPage${className_d}(${className_x});
+modelMap.addAttribute("${className_x}List", ${className_x}List);
+modelMap.addAttribute("${className_x}", ${className_x});
+return "${className_x}/${className_d}List";
+}
+
+/**
+* 请求编辑页面
+* @return
+*/
+@RequestMapping(value = "/load")
+public String load( ${className_d} ${className_x},ModelMap modelMap) {
+${className_x} = ${className_x}Service.get${className_d}ById(${className_x}.get${key_d}()+"");
+modelMap.addAttribute("${className_x}", ${className_x});
+
+return "${className_x}/${className_d}Info";
+}
+
+
+
+
+
+
+/**
+* 查看详情
+*/
+@RequestMapping(value = "/delete")
+@ResponseBody
+public String delete(${className_d} ${className_x} ,ModelMap modelMap) {
+${className_x}Service.delete${className_d}(${className_x});
+return "success";
+}
+
+
+
+
+
 
 	/**
 	 * 保存
-	 * 
-	 * @param ${className_x}
+	 *
 	 * @return
 	 */
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
+    @ResponseBody
 	public ${className_d} save(${className_d} ${className_x}) {
 	    try {
-			if (${className_x}.get${key_d}() == null || ${className_x}.get${key_d}().intValue() == 0) {
+			if (${className_x}.get${key_d}() == null ) {
 				${className_x}Service.insertSelective(${className_x});
 			} else {
 				${className_x}Service.updateByPrimaryKeySelective(${className_x});
@@ -79,14 +101,6 @@ public class ${className_d}Controller {
 
 
 
-	
-	/**
-	 * 查看详情
-	 * @param  ${className_x}
-	 */
-	@RequestMapping(value = "/delete")
-	public String delete(${className_d} ${className_x} ,ModelMap modelMap) {
-		${className_x}Service.delete${className_d}(${className_x});
-		return "success";
-	}
+
+
 }

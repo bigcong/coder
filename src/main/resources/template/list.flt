@@ -20,7 +20,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
 <link type="text/css" rel="stylesheet" href="../css/main.css" />
-<script type="text/javascript" src="../js/jquery-1.5.1.min.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
 <link type="text/css" rel="stylesheet" href="../js/chosen.min.css" />
 <script type="text/javascript" src="../js/chosen.jquery.min.js"></script>
 <script type="text/javascript" src="../js/datePicker/WdatePicker.js"></script>
@@ -51,7 +51,7 @@
 			maxBtn : false,
 			xButton : true,
 			resize : false,
-			page : 'load.html?${key_x}=' + ${className_x}Id
+			page : 'load?${key_x}=' + ${className_x}Id
 		});
 		dg.ShowDialog();
 	}
@@ -59,12 +59,9 @@
     //删除
 	function del${className_d}(${className_x}Id) {
 		if (confirm("确定要删除该记录？")) {
-			var url = "delete.html?${key_x}=" + ${className_x}Id;
+			var url = "delete?${key_x}=" + ${className_x}Id;
 			$.get(url, function(data) {
-			    data=JSON.parse(data);
-				if (data == "success") {
 					document.location.reload();
-				}
 			});
 		}
 	}
@@ -81,7 +78,7 @@
 			maxBtn : false,
 			xButton : true,
 			resize : false,
-			page : 'view.html?${key_x}='+${className_x}Id
+			page : 'view?${key_x}='+${className_x}Id
 		});
 		dg.ShowDialog();
 	}
@@ -93,7 +90,7 @@
     
     //导出
 	function export${className_d}() {
-		document.location = "${className_d}/excel.html";
+		document.location = "${className_d}/excel";
 	}
 	
 	//删除全部
@@ -110,7 +107,7 @@
 		  }); 
 
 		if (confirm("确定要删除这些记录吗？")) {
-				var url = "${className_d}/delete.html?ids=" + ids;
+				var url = "${className_d}/delete?ids=" + ids;
 				$.get(url, function(data) {
 					if (data == "success") {
 						document.location.reload();
@@ -121,7 +118,7 @@
 </script>
 </head>
 <body>
-	<form action="list.html" method="post" name="${className_x}Form" id="${className_x}Form">
+	<form action="list" method="post" name="${className_x}Form" id="${className_x}Form">
 		<div class="search_div">
 		  <#list tableCarrays as tableCarray>
 		 	 <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}"    value="${r'$'}{${className_x}.${tableCarray.carrayName_x}}"  style="width: 150px;" placeholder="${tableCarray.remark}" />
@@ -151,8 +148,8 @@
 				           </#list>
 							
 							<td>
-							      <a href="javascript:load${className_d}(${r'$'}{a.${key_x}});">修改</a>
-								| <a href="javascript:del${className_d}(${r'$'}{a.${key_x}});">删除</a>
+							      <a href="javascript:load${className_d}('${r'$'}{a.${key_x}}');">修改</a>
+								| <a href="javascript:del${className_d}('${r'$'}{a.${key_x}}');">删除</a>
 							</td>
 						</tr>
 					</c:forEach>
@@ -171,53 +168,4 @@
 
 
 
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>通话记录</title>
-    <link href="/bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-</head>
-
-<body>
-    <div class="container-fluid" ng-app="MyFilterApp" ng-controller="callRecordsController">
-        <div class="page-header">
-            <h3>通话记录 <small></small></h3>
-        </div>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>序号</th>
-            		<#list tableCarrays as tableCarray>
-            				   <th>${tableCarray.remark}</th>
-            				</#list>
-            				<th>操作</th>
-                </tr>
-            </thead>
-            <tbody ng-repeat="record in callRecords">
-                <tr>
-                    <td ng-bind="$index+1"></td>
-                    <td>{{record.callId}}</td>
-                    	<#list tableCarrays as tableCarray>
-                    							    <td>{{a.${tableCarray.carrayName_x}}}</td>
-                    	</#list>
-                </tr>
-            </tbody>
-        </table>
-        <nav>
-            <ul class="pagination pagination-lg" ng-repeat="pageNo in currentPage">
-                <li ng-show="$index==0"><a href aria-label="Previous" data="{{page.page.currentPage-1}}" ng-click="GoPage(page.page.currentPage-1)"><span aria-hidden="true">«</span></a></li>
-                <li><a href data="{{pageNo}}" ng-click="GoPage(pageNo)">{{pageNo}}</a></li>
-                <li ng-show="$index==4"> <a href aria-label="Next" data="{{page.page.currentPage+1}}" ng-click="GoPage(page.page.currentPage+1)"><span aria-hidden="true">»</span></a></li>
-            </ul>
-        </nav>
-    </div>
-    <script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/bower_components/angular/angular.min.js"></script>
-    <script type="text/javascript" src="contact.js"></script>
-</body>
-
-</html>

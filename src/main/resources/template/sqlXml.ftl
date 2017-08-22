@@ -78,7 +78,7 @@
 	</insert>	
 	
 	<!-- 根据主键查询(唯一)-->
-	<select id="get${className_d}ById" parameterType="Integer" resultMap="${className_d}Map">
+	<select id="get${className_d}ById" parameterType="java.lang.String" resultMap="${className_d}Map">
 		select 
 		<include refid="${className_d}Columns" /> 
 		from ${className} where 

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>HLRMS-好邻后台管理系统</title>
+<title>后台管理系统</title>
 <link type="text/css" rel="stylesheet" href="../css/main.css"/>
 <style type="text/css">
 body{width:100%;height:100%;background-color: #FFFFFF;text-align: center;}
@@ -25,12 +25,11 @@ body{width:100%;height:100%;background-color: #FFFFFF;text-align: center;}
 				<th>${tableCarray.remark}:</th>
 				<td>
 				 <#if tableCarray.carrayType=="java.util.Date">
-			        <input type="text" 
+			        <input type="text"
 					value="<fmt:formatDate value="<@mapperEl pre="${className}." end="${tableCarray.carrayName_x}"/>" pattern="yyyy-MM-dd"/>"
 					 style="width: 200px;" disabled="disabled"/>
 			         <#else>
-			         <input type="text" name="${tableCarray.carrayName_x}" id="${tableCarray.carrayName_x}" class="input_txt"
-					value="<@mapperEl pre="${className}." end="${tableCarray.carrayName_x}"/>" disabled="disabled"/>
+			        <@mapperEl pre="${className_x}." end="${tableCarray.carrayName_x}"/>
 			      </#if>
 				</td>
 			</tr>
