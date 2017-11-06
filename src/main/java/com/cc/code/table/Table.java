@@ -56,6 +56,9 @@ public class Table {
 
     private String stringCarrayNames8;//根据主键得到实体
 
+
+
+
     public Table(String className, String classNameD, String classNameX, String packageName,
             List<TableCarray> tableCarrays, List<TableIndex> tableIndexs, List<TableBind> tableBinds,
             Set<String> importPojos, String stringCarrayNames1, String stringCarrayNames2, String stringCarrayNames3,

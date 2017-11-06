@@ -26,7 +26,7 @@ public class Build {
          * 第三个参数:数据源配置
          * 第四个参数:生成目标文件的位置
          */
-        Generator generator = new Generator(new String[]{"bills"}, "com.cc", cfg, "/Users/cong/cc/jakiro/src/main/java");
+        Generator generator = new Generator(new String[]{"system_log"}, "com.cc", cfg, "/Users/cong/cc/cc/jakiro/src/main/java");
         generator.generate(true, true, true, true, true, true, true, true, true);
 
     }

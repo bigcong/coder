@@ -1,23 +1,12 @@
 package com.cc.code.util;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.cc.code.table.Table;
 import com.cc.code.table.TableBind;
 import com.cc.code.table.TableCarray;
 import com.cc.code.table.TableIndex;
+
+import java.sql.*;
+import java.util.*;
 
 @SuppressWarnings("all")
 public class TableUtil {
@@ -367,6 +356,9 @@ public class TableUtil {
                 ResultSet rs = conn.getMetaData().getPrimaryKeys("", "", tableName);
                 while (rs.next()) {
                     String primaryKey = rs.getString("COLUMN_NAME");//获取主键名字
+                    if (primaryKey != null && !primaryKey.equals("")) {
+                        table.setKey(primaryKey);
+                    }
 
                     table.setKey_x(StringUtil.lowerFirst(StringUtil.newTableName(primaryKey)));
                     table.setKey_d(StringUtil.upperFirst(StringUtil.newTableName(primaryKey)));
