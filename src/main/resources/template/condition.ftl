@@ -1,4 +1,4 @@
-package ${packageName}.entity;
+package ${packageName}.condition;
 
 
 import lombok.AllArgsConstructor;
@@ -18,10 +18,10 @@ import java.util.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ${className_d}Entity {
+public class ${className_d}Condition {
 
     <#--列出所有的字段 -->
-	<#list tableCarrays as tableCarray>
+	<#list tableCarraySet as tableCarray>
 	/**
 	   ${tableCarray.remark}
 	 */

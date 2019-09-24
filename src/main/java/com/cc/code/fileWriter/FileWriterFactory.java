@@ -1,18 +1,14 @@
 package com.cc.code.fileWriter;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-
 import com.cc.code.table.Table;
 import com.cc.code.util.DirMaker;
-
+import com.cc.code.util.FileEnum;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+
+import java.io.*;
 
 /**
  * @author jlon
@@ -50,8 +46,11 @@ public class FileWriterFactory {
     public static final int VIEWJSP = 8;
 
     public static final int CONTROLLER = 9;
+    public static final int CONDITION = 10;
 
+    public static final int DTO = 11;
 
+    public static final int PARAM = 12;
 
     /**
      * @param url
@@ -63,7 +62,8 @@ public class FileWriterFactory {
 
             ClassLoader classLoader = FileWriterFactory.class.getClassLoader();
 
-            File file = new File(classLoader.getResource("template").getFile());
+            File file = new File(classLoader.getResource("template")
+                .getFile());
             try {
                 cfg.setDirectoryForTemplateLoading(file);
                 cfg.setObjectWrapper(new DefaultObjectWrapper());
@@ -76,16 +76,15 @@ public class FileWriterFactory {
 
     /**
      * @param cfg
-     * @param templateName
      * @param table
-     * @param type
+     * @param fileEnum
+     * @param resultURL
      */
-    public static void dataSourceOut(Configuration cfg, String templateName,
-                                     Table table, int type,String resultURL) {
+    public static void dataSourceOut(Configuration cfg, Table table, FileEnum fileEnum, String resultURL) {
         String fileName = null;
         Template temp = null;
         try {
-            temp = cfg.getTemplate(templateName);
+            temp = cfg.getTemplate(fileEnum.getName());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,48 +92,12 @@ public class FileWriterFactory {
 
         try {
             String packageName = "";
-            switch (type) {
-                case POJO:
-                    fileName = ".java";
-                    packageName = table.getPackageName() + ".entity";// 获得这个文件的存储路径(外部传进来的)
-                    break;
-                case CONTROLLER:
-                    fileName = "Controller" + ".java";
-                    packageName = table.getPackageName() + ".controller";// 获得这个文件的存储路径(外部传进来的)
-                    break;
-                case MAPPER:
-                    fileName = "Mapper" + ".java";
-                    packageName = table.getPackageName() + ".mapper";
-                    break;
-                case SERVICE:
-                    fileName = "Service" + ".java";
-                    packageName = table.getPackageName() + ".service";
-                    break;
-                case SERVICE_IMPL:
-                    fileName = "ServiceImpl" + ".java";
-                    packageName = table.getPackageName() + ".service.impl";
-                    break;
-                case SQLXML:
-                    fileName = "Mapper" + ".xml";
-                    packageName = "mybatis";// 获得这个文件的存储路径(外部传进来的)
-                    break;
-                case LISTJSP:
-                    fileName = "List.jsp";
-                    packageName = ".jsp." + table.getClassName_x();
-                    break;
-                case INFOJSP:
-                    fileName = "Info.jsp";
-                    packageName = ".jsp." + table.getClassName_x();
-                    break;
-                case VIEWJSP:
-                    fileName = "View.jsp";
-                    packageName = ".jsp." + table.getClassName_x();
-                    break;
-            }
+            fileName = fileEnum.getFileName();
+            packageName = table.getPackageName() + "." + fileEnum.getPackageName();
+
             packageName = packageName.replace(".", "/");
 
-            String url =resultURL +"/"+ packageName + "/"
-                    + table.getClassName_d() + fileName;
+            String url = resultURL + "/" + packageName + "/" + table.getClassName_d() + fileName;
             System.out.println(url);
 
             File file = new File(url);
@@ -149,18 +112,8 @@ public class FileWriterFactory {
 
             out.flush();
 
-        } catch (TemplateException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
@@ -170,8 +123,7 @@ public class FileWriterFactory {
      * @param root
      * @param fileName
      */
-    public static void dataSourceOut(Configuration cfg, String templateName,
-                                     Object root, String fileName) {
+    public static void dataSourceOut(Configuration cfg, String templateName, Object root, String fileName) {
 
         Template temp = null;
         try {

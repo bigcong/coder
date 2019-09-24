@@ -1,60 +1,47 @@
-package ${packageName}.mapper;
+package ${packageName}.dao;
 import java.util.*;
-import ${packageName}.entity.${className_d};
+import ${packageName}.entity.${className_d}Entity;
+import ${packageName}.condition.${className_d}Condition;
+
 /**
- * ${className}
- */
-public interface ${className_d}Mapper{
-   
-	
+* @description: ${tableRemark}
+* @author:   ${author}
+* @date: ${dateTime}
+**/
+public interface ${className_d}DAO{
+
+
 	/**
-	 * 根据条件 查询全部listPageAccount
-	 */
+	* 根据条件查询
+	* @param ${className_x}
+	* @return
+	*/
+	 List<${className_d}Entity> queryByCondition(${className_d}Condition ${className_x});
+
+	/**
+	* 有条件的更新
+	* @param ${className_x}
+	* @return
+	*/
+	 void insertSelective(${className_d}Entity ${className_x});
+
+	/**
+	* 根据主键有条件的更新
+	* @param ${className_x}
+	* @return
+	*/
+	 void updateByPrimaryKeySelective(${className_d}Entity ${className_x});
+	
+
+	/**
+	* 根据主键查询
+	* @param ${key_x}
+	* @return
+	*/
+	 ${className_d}Entity getByPrimaryKey(${keyCarrayType} ${key_x});
+	
+
 	 
-	public List<${className_d}> listPage${className_d}(${className_d} ${className_x});
-	
-	/**
-	 *  获取${className_d}的数量
-	 */
-	public Integer get${className_d}Count();
-	
-	
-	public void insert(${className_d} ${className_x});
-	/**
-	 *有条件的更新
-	 */
-	
-	public void insertSelective(${className_d} ${className_x});
-	/**
-	 *根据主键有条件的更新
-	 */
-	
-	public void updateByPrimaryKeySelective(${className_d} ${className_x});
-	
-	/**
-	 * 根据主键查询(唯一)
-	 */
-	public ${className_d} get${className_d}ById(String id);
-	
-	/**
-	 * 根据根据条件查询${className_d} 
-	 */
-	public List<${className_d}> list${className_d}(${className_d} ${className_x});  
-	 
-	 /**
-	 * 更新${className_d}
-	 */
-	public void update${className_d}(${className_d} ${className_x});
-	
-	 /**
-	 * 很据实体类删除
-	 */
-	
-	public void  delete${className_d}(${className_d} ${className_x});
-	
-	 /**
-	 * 根据主键删除
-	 */
-	public void  delete${className_d}ByIds (String[] id);
+
 	
 }

@@ -7,6 +7,7 @@ import com.cc.code.table.TableIndex;
 
 import java.sql.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("all")
 public class TableUtil {
@@ -35,18 +36,19 @@ public class TableUtil {
 
         if (tableNames != null && tableNames.length != 0) {
             for (String tableName : tableNames) {
-                ResultSet rs = dme.getTables("", "", tableName, new String[]{"TABLE"});
+                ResultSet rs = dme.getTables("", "", tableName, new String[] {"TABLE"});
                 sets.add(rs);
             }
         } else {
-            ResultSet rs = dme.getTables("", "", "", new String[]{"TABLE"});
+            ResultSet rs = dme.getTables("", "", "", new String[] {"TABLE"});
             sets.add(rs);
         }
 
         List<Map> list = resToList(sets);
 
         for (Map map : list) {
-            String tableName = map.get("TABLE_NAME").toString();
+            String tableName = map.get("TABLE_NAME")
+                .toString();
             tableNanes.add(tableName);
         }
         return tableNanes;
@@ -75,8 +77,9 @@ public class TableUtil {
      * @throws Exception
      */
     public static final String getRemark(Connection conn, String tableName, String columnName) throws Exception {
-        String sql = String.format("SELECT " + "COLUMN_NAME, DATA_TYPE, "
-                + "COLUMN_COMMENT FROM information_schema.columns " + "WHERE table_name  =? and COLUMN_NAME =? ");
+        String sql = String.format(
+            "SELECT " + "COLUMN_NAME, DATA_TYPE, " + "COLUMN_COMMENT FROM information_schema.columns "
+                + "WHERE table_name  =? and COLUMN_NAME =? ");
 
         PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.setString(1, tableName);
@@ -87,6 +90,27 @@ public class TableUtil {
 
         while (rs.next()) {
             remark = rs.getString("COLUMN_COMMENT");
+        }
+        return remark;
+    }
+
+    /**
+     * 取得表中的字段的注视
+     *
+     * @throws Exception
+     */
+    public static final String getTableRemark(Connection conn, String tableName) throws Exception {
+        String sql =
+            String.format("SELECT TABLE_NAME, TABLE_COMMENT FROM information_schema.Tables WHERE TABLE_NAME =?  ");
+
+        PreparedStatement stmt = conn.prepareStatement(sql);
+        stmt.setString(1, tableName);
+
+        ResultSet rs = stmt.executeQuery();
+        String remark = null;
+
+        while (rs.next()) {
+            remark = rs.getString("TABLE_COMMENT");
         }
         return remark;
     }
@@ -148,7 +172,8 @@ public class TableUtil {
     public static final List<Map> resToList(List<ResultSet> resultSets) throws SQLException {
         List<Map> list = new ArrayList<Map>();
         for (int i = 0; i < resultSets.size(); i++) {
-            while (resultSets.get(i).next()) {
+            while (resultSets.get(i)
+                .next()) {
                 list.add(resToMap(resultSets.get(i)));
             }
         }
@@ -166,8 +191,9 @@ public class TableUtil {
         Map map = new HashMap();
         ResultSetMetaData rsmd = rs.getMetaData();
         int cols = rsmd.getColumnCount();
-        for (int i = 1; i <= cols; i++)
+        for (int i = 1; i <= cols; i++) {
             map.put(rsmd.getColumnName(i), rs.getObject(i));
+        }
 
         return map;
     }
@@ -209,8 +235,7 @@ public class TableUtil {
             boolean isSigned = rsmd.isSigned(i);
             boolean isWritable = rsmd.isWritable(i);
 
-            @SuppressWarnings("rawtypes")
-            Map e = new HashMap();
+            @SuppressWarnings("rawtypes") Map e = new HashMap();
             e.put("i", i);
             e.put("columnName", columnName);
             e.put("columnType", columnType);
@@ -251,7 +276,7 @@ public class TableUtil {
      * @throws Exception
      */
     public static final List<Table> getTables(Connection conn, String packageName, String[] tableNames)
-            throws Exception {
+        throws Exception {
 
         // 存放数据库当中的表
         List<Table> tables = new ArrayList<Table>();
@@ -330,10 +355,12 @@ public class TableUtil {
 
                 stringCarrayNames4 += String.format("#{%s}", tableCarray.getCarrayName_x());
 
-                stringCarrayNames5 += String.format("%s=#{%s}", tableCarray.getCarrayName(),
-                        tableCarray.getCarrayName_x());
+                stringCarrayNames5 +=
+                    String.format("%s=#{%s}", tableCarray.getCarrayName(), tableCarray.getCarrayName_x());
 
-                if (!tableCarray.getCarrayName().equals("ID") && !tableCarray.getCarrayName().equals("id")) {
+                if (!tableCarray.getCarrayName()
+                    .equals("ID") && !tableCarray.getCarrayName()
+                    .equals("id")) {
 
                     if (!"".endsWith(stringCarrayNames6)) {
                         stringCarrayNames6 += ", ";
@@ -349,19 +376,46 @@ public class TableUtil {
             }
 
             table = new Table(tableName, className_d, className_x, packageName, tableCarrays, tableIndexs, tableBinds,
-                    upperTableNames, stringCarrayNames1, stringCarrayNames2, stringCarrayNames3, stringCarrayNames4,
-                    stringCarrayNames5, stringCarrayNames6, stringCarrayNames7);
+                upperTableNames, stringCarrayNames1, stringCarrayNames2, stringCarrayNames3, stringCarrayNames4,
+                stringCarrayNames5, stringCarrayNames6, stringCarrayNames7);
+
+            table.setTableRemark(getTableRemark(conn, tableName));
+            Set<String> collect = table.getTableIndexs()
+                .stream()
+                .filter(t -> !t.getIndexName()
+                    .equals("PRIMARY"))
+                .flatMap(t -> t.getCarrayNames()
+                    .stream())
+                .collect(Collectors.toSet());
+
+            List<TableCarray> tableCarraySet = table.getTableCarrays()
+                .stream()
+                .filter(t -> collect.contains(t.getCarrayName()))
+                .collect(Collectors.toList());
+            table.setTableCarraySet(tableCarraySet);
             String stringCarrayNames8 = "";
             if (table.getKey() == null) {
-                ResultSet rs = conn.getMetaData().getPrimaryKeys("", "", tableName);
+                ResultSet rs = conn.getMetaData()
+                    .getPrimaryKeys("", "", tableName);
                 while (rs.next()) {
                     String primaryKey = rs.getString("COLUMN_NAME");//获取主键名字
+
                     if (primaryKey != null && !primaryKey.equals("")) {
                         table.setKey(primaryKey);
                     }
 
                     table.setKey_x(StringUtil.lowerFirst(StringUtil.newTableName(primaryKey)));
                     table.setKey_d(StringUtil.upperFirst(StringUtil.newTableName(primaryKey)));
+
+                    Optional<TableCarray> first = tableCarrays.stream()
+                        .filter(t -> t.getCarrayName_d()
+                            .equals(StringUtil.upperFirst(StringUtil.newTableName(primaryKey))))
+                        .findFirst();
+                    if (first.isPresent()) {
+                        table.setKeyCarrayType(first.get()
+                            .getCarrayType());
+                    }
+
                     stringCarrayNames8 += String.format("%s=#{%s}", primaryKey, table.getKey_x());
                 }
 
@@ -391,20 +445,24 @@ public class TableUtil {
 
         for (Map<String, Object> map : carrays) {
 
-            String columnLabel = map.get("columnLabel").toString();
+            String columnLabel = map.get("columnLabel")
+                .toString();
 
-            String carrayName_d = StringUtil.upperFirst(PinYinUtil.getFirstSpell(StringUtil.newTableName(columnLabel)));// 首字母大写
+            String carrayName_d =
+                StringUtil.upperFirst(PinYinUtil.getFirstSpell(StringUtil.newTableName(columnLabel)));// 首字母大写
 
-            String carrayName_x = StringUtil.lowerFirst(PinYinUtil.getFirstSpell(StringUtil.newTableName(columnLabel)));// 首字母小写
+            String carrayName_x =
+                StringUtil.lowerFirst(PinYinUtil.getFirstSpell(StringUtil.newTableName(columnLabel)));// 首字母小写
 
-            String carrayType = map.get("javaForType").toString();// 字段类型
+            String carrayType = map.get("javaForType")
+                .toString();// 字段类型
             //转为它的包装类
             if (carrayType.equals("int")) {
                 carrayType = "Integer";
             } else if (carrayType.equals("short")) {
                 carrayType = "Short";
             } else if (carrayType.equals("java.util.Date")) {
-                carrayType = "String";
+                carrayType = "Date";
             } else if (carrayType.equals("java.sql.Time")) {
                 carrayType = "String";
             } else if (carrayType.equals("boolean")) {
@@ -416,6 +474,10 @@ public class TableUtil {
             }
 
             tabelCarray = new TableCarray(columnLabel, carrayName_d, carrayName_x, carrayType, "");
+
+            tabelCarray.setJdbcType(map.get("columnTypeName")
+                .toString());
+
             tableCarrays.add(tabelCarray);
         }
         return tableCarrays;
@@ -426,7 +488,8 @@ public class TableUtil {
         Map<String, String> carrayTypes = getTableCarrayTypes(conn, tableName);
         Map<String, List<Map>> _index = new HashMap<String, List<Map>>();
         for (Map map : indexs) {
-            String indexName = map.get("INDEX_NAME").toString(); // 索引名称
+            String indexName = map.get("INDEX_NAME")
+                .toString(); // 索引名称
             List<Map> list = _index.remove(indexName);
             if (list == null) {
                 list = new ArrayList<Map>();
@@ -437,10 +500,12 @@ public class TableUtil {
 
         List<TableIndex> tableIndexs = new ArrayList<TableIndex>();
         TableIndex tabelIndex = null;
-        Iterator it = _index.entrySet().iterator();
+        Iterator it = _index.entrySet()
+            .iterator();
         while (it.hasNext()) {
-            Map.Entry e = (Map.Entry) it.next();
-            String indexName = e.getKey().toString();
+            Map.Entry e = (Map.Entry)it.next();
+            String indexName = e.getKey()
+                .toString();
             boolean unique = false;
             List<String> carrayNames = new ArrayList<String>();
             List<String> carrayNames_d = new ArrayList<String>();
@@ -451,14 +516,16 @@ public class TableUtil {
             String stringCarrayNames3 = "";
             String stringCarrayNames4 = "";
             String stringCarrayNames5 = "";
-            List<Map> vals = (List<Map>) e.getValue();
+            List<Map> vals = (List<Map>)e.getValue();
             for (Map map : vals) {
-                String carrayName = map.get("COLUMN_NAME").toString();
-                unique = "false".equals(map.get("NON_UNIQUE").toString());
-                String carrayName_d = StringUtil.upperFirst(PinYinUtil.getFirstSpell(StringUtil
-                        .newTableName(carrayName)));
-                String carrayName_x = StringUtil.lowerFirst(PinYinUtil.getFirstSpell(StringUtil
-                        .newTableName(carrayName)));
+                String carrayName = map.get("COLUMN_NAME")
+                    .toString();
+                unique = "false".equals(map.get("NON_UNIQUE")
+                    .toString());
+                String carrayName_d =
+                    StringUtil.upperFirst(PinYinUtil.getFirstSpell(StringUtil.newTableName(carrayName)));
+                String carrayName_x =
+                    StringUtil.lowerFirst(PinYinUtil.getFirstSpell(StringUtil.newTableName(carrayName)));
                 carrayNames.add(carrayName);
                 carrayNames_d.add(carrayName_d);
                 carrayNames_x.add(carrayName_x);
@@ -484,9 +551,9 @@ public class TableUtil {
                 stringCarrayNames4 += carrayName_x;
                 stringCarrayNames5 += String.format("%s=#{%s}", carrayName, carrayName_x);
             }
-            tabelIndex = new TableIndex(indexName, carrayNames, carrayNames_d, carrayNames_x, carrayNameMaps,
-                    stringCarrayNames1, stringCarrayNames2, stringCarrayNames3, stringCarrayNames4, stringCarrayNames5,
-                    unique);
+            tabelIndex =
+                new TableIndex(indexName, carrayNames, carrayNames_d, carrayNames_x, carrayNameMaps, stringCarrayNames1,
+                    stringCarrayNames2, stringCarrayNames3, stringCarrayNames4, stringCarrayNames5, unique);
             tableIndexs.add(tabelIndex);
         }
         return tableIndexs;
@@ -496,9 +563,11 @@ public class TableUtil {
         Map<String, String> tableCarrayTypes = new HashMap<String, String>();
         List<Map<String, Object>> carrays = getCarrays(conn, tableName);
         for (Map<String, Object> map : carrays) {
-            String columnLabel = map.get("columnLabel").toString();
+            String columnLabel = map.get("columnLabel")
+                .toString();
             String carrayName_d = StringUtil.upperFirst(PinYinUtil.getFirstSpell(columnLabel));// 首字母大写
-            String carrayType = map.get("javaForType").toString();// 字段类型
+            String carrayType = map.get("javaForType")
+                .toString();// 字段类型
             tableCarrayTypes.put(carrayName_d, carrayType);
         }
         return tableCarrayTypes;
@@ -518,12 +587,15 @@ public class TableUtil {
         String table_Name_d = "";
         String table_Name_x = "";
 
-        List<Map> exportedKeys = (List<Map>) map.get("ExportedKeys");
+        List<Map> exportedKeys = (List<Map>)map.get("ExportedKeys");
         for (Map exportedKey : exportedKeys) {
-            keyName = exportedKey.get("FK_NAME").toString();
+            keyName = exportedKey.get("FK_NAME")
+                .toString();
             keyType = "exportedKey";
-            carrayName = exportedKey.get("FKCOLUMN_NAME").toString();
-            table_Name = exportedKey.get("FKTABLE_NAME").toString();
+            carrayName = exportedKey.get("FKCOLUMN_NAME")
+                .toString();
+            table_Name = exportedKey.get("FKTABLE_NAME")
+                .toString();
             carrayName_d = StringUtil.upperFirst(PinYinUtil.getFirstSpell(carrayName));
             carrayName_x = StringUtil.lowerFirst(PinYinUtil.getFirstSpell(carrayName));
             table_Name_d = StringUtil.upperFirst(PinYinUtil.getFirstSpell(table_Name));
@@ -531,12 +603,15 @@ public class TableUtil {
             tableBind = new TableBind(keyName, keyType, table_Name_d, table_Name_x, carrayName_d, carrayName_x);
             tableBinds.add(tableBind);
         }
-        List<Map> importedKeys = (List<Map>) map.get("ImportedKeys");
+        List<Map> importedKeys = (List<Map>)map.get("ImportedKeys");
         for (Map importedKey : importedKeys) {
-            keyName = importedKey.get("FK_NAME").toString();
+            keyName = importedKey.get("FK_NAME")
+                .toString();
             keyType = "importedKey";
-            carrayName = importedKey.get("FKCOLUMN_NAME").toString();
-            table_Name = importedKey.get("PKTABLE_NAME").toString();
+            carrayName = importedKey.get("FKCOLUMN_NAME")
+                .toString();
+            table_Name = importedKey.get("PKTABLE_NAME")
+                .toString();
             carrayName_d = StringUtil.upperFirst(PinYinUtil.getFirstSpell(carrayName));
             carrayName_x = StringUtil.lowerFirst(PinYinUtil.getFirstSpell(carrayName));
             table_Name_d = StringUtil.upperFirst(PinYinUtil.getFirstSpell(table_Name));

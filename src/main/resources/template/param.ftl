@@ -1,4 +1,4 @@
-package ${packageName}.entity;
+package ${packageName}.param;
 
 
 import lombok.AllArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ${className_d}Entity {
+public class ${className_d}Param {
 
     <#--列出所有的字段 -->
 	<#list tableCarrays as tableCarray>

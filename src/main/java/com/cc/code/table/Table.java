@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 
  * @author jlon
- *
  */
 @SuppressWarnings("all")
 public class Table {
@@ -25,6 +23,8 @@ public class Table {
     private String key_x;// 主键小写
 
     private String key_d;// 主键大写
+
+    private String keyCarrayType;
 
     public String getKey_d() {
         return key_d;
@@ -56,13 +56,17 @@ public class Table {
 
     private String stringCarrayNames8;//根据主键得到实体
 
+    private String tableRemark;
+    private String author;
 
+    private String dateTime;
 
+    private List<TableCarray> tableCarraySet;
 
     public Table(String className, String classNameD, String classNameX, String packageName,
-            List<TableCarray> tableCarrays, List<TableIndex> tableIndexs, List<TableBind> tableBinds,
-            Set<String> importPojos, String stringCarrayNames1, String stringCarrayNames2, String stringCarrayNames3,
-            String stringCarrayNames4, String stringCarrayNames5, String stringCarrayNames6, String stringCarrayNames7) {
+        List<TableCarray> tableCarrays, List<TableIndex> tableIndexs, List<TableBind> tableBinds,
+        Set<String> importPojos, String stringCarrayNames1, String stringCarrayNames2, String stringCarrayNames3,
+        String stringCarrayNames4, String stringCarrayNames5, String stringCarrayNames6, String stringCarrayNames7) {
         super();
         this.className = className;
         className_d = classNameD;
@@ -226,4 +230,43 @@ public class Table {
         this.packageName = packageName;
     }
 
+    public String getTableRemark() {
+        return tableRemark;
+    }
+
+    public void setTableRemark(String tableRemark) {
+        this.tableRemark = tableRemark;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public String getKeyCarrayType() {
+        return keyCarrayType;
+    }
+
+    public void setKeyCarrayType(String keyCarrayType) {
+        this.keyCarrayType = keyCarrayType;
+    }
+
+    public List<TableCarray> getTableCarraySet() {
+        return tableCarraySet;
+    }
+
+    public void setTableCarraySet(List<TableCarray> tableCarraySet) {
+        this.tableCarraySet = tableCarraySet;
+    }
 }
